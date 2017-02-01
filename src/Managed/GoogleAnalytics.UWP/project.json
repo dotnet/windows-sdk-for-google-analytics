@@ -1,0 +1,23 @@
+﻿{
+  "dependencies": {
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+    "System.Reflection.Emit.ILGeneration": {      
+      "version": "4.0.1",
+      "exclude": "compile"
+    }
+  },
+  "frameworks": {
+    "uap10.0": {}
+  },
+  "runtimes": {
+    "win10-arm": { },
+    "win10-arm-aot": { },
+    "win10-x86": { },
+    "win10-x86-aot": { },
+    "win10-x64": { },
+    "win10-x64-aot": { }
+  }
+
+
+
+}

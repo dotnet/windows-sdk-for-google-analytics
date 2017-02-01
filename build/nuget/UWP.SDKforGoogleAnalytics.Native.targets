@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <ga-DeviceType Condition="'$(TargetPlatformIdentifier)' == 'UAP'">win10</ga-DeviceType>
+    <ga-DeviceType Condition="'$(TargetPlatformIdentifier)' == 'UWP'">win10</ga-DeviceType>
+    <ga-Platform Condition="'$(Platform)' == 'Win32'">x86</ga-Platform>
+    <ga-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</ga-Platform>
+    <ga-BinDir Condition="'$(ga-BinDir)' == ''">$(MSBuildThisFileDirectory)..\..\runtimes\</ga-BinDir>
+    <ga-RefDir Condition="'$(ga-LibDir)' == ''">$(MSBuildThisFileDirectory)..\..\ref\uap10.0\</ga-RefDir>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP' AND '$(TargetRuntime)' != 'AppHost'">
+      <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\GoogleAnalytics.winmd">
+        <Implementation>GoogleAnalytics.dll</Implementation>           
+      </Reference>    
+      <ReferenceCopyLocalPaths Include="$(ga-BinDir)$(ga-DeviceType)-$(ga-Platform)\native\GoogleAnalytics.dll" />
+
+  </ItemGroup>
+
+
+  <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP' AND '$(TargetRuntime)' == 'AppHost' ">
+    <Reference Include="$(ga-RefDir)$(ga-DeviceType)-$(ga-Platform)\native\GoogleAnalytics.winmd">
+      <Implementation>GoogleAnalytics.dll</Implementation>
+      <IsWinMDFile>true</IsWinMDFile>
+      <CopyLocal>True</CopyLocal>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  
+
+  <!--<ItemGroup Condition="'$(TargetRuntime)' == 'Managed'">
+    <ReferenceCopyLocalPaths Include="$(ga-BinDir)\any\lib\GoogleAnalytics.winmd" />
+  </ItemGroup>-->
+    
+  <ItemGroup>
+      <!-- ensure we have an VC runtime reference on non-VC projects -->
+      <SDKReference Include="Microsoft.VCLibs, Version=14.0"/>
+   </ItemGroup>
+
+
+  <Target Name="DisplayMessages" BeforeTargets="ResolveAssemblyReferences" >
+    <Message Condition="'$(TargetPlatformIdentifier)' == 'UAP' AND '$(ResolveNuGetPackages)' != 'false' 
+             AND !Exists('$(ProjectLockFile)')" Text="JAIMER-Conditions for winmd are good" />
+    <Message Text="JAIMER- PID= $(TargetPlatformIdentifier)" />
+    <Message Text="JAIMER- Resolve = $(ResolveNuGetPackages)" />
+    <Message Condition="!Exists('$(ProjectLockFile)')" Text="JAIMER- No lock file" />
+    <Message Condition="Exists('$(ProjectLockFile)')" Text="JAIMER- lock file exits " />
+    <Message Text="JAIMER- target runtime: '$(TargetRuntime)' "/>
+    <Message Condition="'$(TargetPlatformIdentifier)' == 'UAP' AND '$(TargetRuntime)' == 'AppHost'" Text="Is AppHost" />
+  </Target>
+  
+</Project>

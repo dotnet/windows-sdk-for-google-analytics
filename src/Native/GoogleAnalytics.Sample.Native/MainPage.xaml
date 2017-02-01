@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="GoogleAnalytics_Sample_Native.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoogleAnalytics_Sample_Native"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="160" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="20" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"   />
+            <RowDefinition Height="Auto"   />
+            <RowDefinition Height="Auto"   />
+            <RowDefinition Height="Auto"   />
+            <RowDefinition Height="Auto"   />
+            <RowDefinition Height="Auto"   />
+            <RowDefinition Height="Auto"   />
+        </Grid.RowDefinitions>
+        <GridView  Grid.Row="1" Header="Activity to track"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Center">
+
+            <Button Content="Custom event" Click="ButtonEvent_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Page view" Click="ButtonView_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Social activity" Click="ButtonSocial_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Timing" Click="ButtonTiming_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Manual exception" Click="ButtonException_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Unhandled Exception" Click="ButtonThrowException_Click" Style="{StaticResource ButtonStyle}"/>
+        </GridView>
+
+        <CheckBox x:Name="IsDebugRequest" Content="Is Debug" Grid.Row="2" Click="IsDebugRequest_Checked" IsChecked="True"  />
+
+        <StackPanel Grid.Row="5" x:Name="RequestPanel"  >
+            <TextBlock Text="Request" />
+            <TextBox IsReadOnly="True" MinHeight="150" AcceptsReturn="True" x:Name="Request" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="6" x:Name="ResponsePanel"  >
+            <TextBlock Text="Results" />
+            <TextBox IsReadOnly="True" MinHeight="150" AcceptsReturn="True" x:Name="Results" />
+        </StackPanel>
+
+    </Grid>
+</Page>

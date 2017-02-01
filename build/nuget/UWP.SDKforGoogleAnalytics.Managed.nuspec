@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    
+    <id>UWP.SDKforGoogleAnalytics.Managed</id>
+
+<!--TODO Version INfo --> 
+    <version>0.0.0-SpecificVersionOnCommandLine</version>
+    <title>UWP SDK for Google Analytics - this is the managed package (for C# apps)</title>
+    <authors>Tim Greenfield</authors>
+    <owners>Tim Greenfield</owners>
+<!--TODO --> 
+    <iconUrl>http://githubusercontent.com/dotnet/WinGASDK/master/TODO_logo_240.png</iconUrl>
+<!--TODO --> 
+    <licenseUrl>http://googleanalyticssdk.codeplex.com/license</licenseUrl>
+<!--TODO --> 
+    <projectUrl>http://googleanalyticssdk.codeplex.com/</projectUrl>
+
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windows SDK for Google Analytics with support for Google Universal Analytics Measurement Protocol</description>
+<!--TODO --> 
+    <releaseNotes>More info on CodePlex at http://googleanalyticssdk.codeplex.com</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>google analtyics universal analytics measurement protocol Win10 UWP Universal</tags>    
+  </metadata>  
+<!--Here are the files we need--> 
+<files> 
+
+<!-- The lib file gets copied as a reference -->      
+    <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.dll" />
+    <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.Core.dll" />
+  
+<!-- intellisense files --> 
+    <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.xml" />
+    <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.Core.xml" />
+
+<!-- pdb files  -->
+  <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.pdb" />
+  <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.Core.pdb" />
+
+<!-- pri files -->
+  <file target="lib\uap10.0\"	src="GoogleAnalytics.UWP\bin\release\GoogleAnalytics.pri" />
+
+</files> 
+ 
+</package>

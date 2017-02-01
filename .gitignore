@@ -161,6 +161,9 @@ PublishScripts/
 # NuGet v3's project.json files produces more ignoreable files
 *.nuget.props
 *.nuget.targets
+ 
+# Nuget Executables (that should be downloaded) 
+nuget.exe 
 
 # Microsoft Azure Build Output
 csx/
@@ -231,6 +234,10 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+#Visual C++ XAML generated 
+Generated Files/
+
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts

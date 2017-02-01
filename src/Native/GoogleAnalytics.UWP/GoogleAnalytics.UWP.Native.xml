@@ -1,0 +1,788 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        "GoogleAnalytics.UWP.Native"
+    </assembly>
+    <members>
+        <member name="P:GoogleAnalytics.PlatformInfoProvider.ScreenColors">
+            <inheritdoc />
+        </member>
+        <member name="P:GoogleAnalytics.PlatformInfoProvider.UserLanguage">
+            <inheritdoc />
+        </member>
+        <member name="P:GoogleAnalytics.PlatformInfoProvider.ScreenResolution">
+            <inheritdoc />
+        </member>
+        <member name="P:GoogleAnalytics.PlatformInfoProvider.ViewPortResolution">
+            <inheritdoc />
+        </member>
+        <member name="P:GoogleAnalytics.PlatformInfoProvider.AnonymousClientId">
+            <inheritdoc />
+        </member>
+        <member name="M:GoogleAnalytics.PlatformInfoProvider.OnTracking">
+            <inheritdoc />
+        </member>
+        <member name="E:GoogleAnalytics.PlatformInfoProvider.ScreenResolutionChanged">
+            <inheritdoc />
+        </member>
+        <member name="E:GoogleAnalytics.PlatformInfoProvider.ViewPortResolutionChanged">
+            <inheritdoc />
+        </member>
+        <member name="T:GoogleAnalytics.PlatformInfoProvider">
+            <summary>
+Windows 10, Universal Platform implementation of <see cref="T:GoogleAnalytics.IPlatformInfoProvider" />.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.IPlatformInfoProvider.ScreenColors">
+            <summary>
+Gets the screen color depth.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.IPlatformInfoProvider.UserLanguage">
+            <summary>
+Gets the language (e.g. 'en-us').
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.IPlatformInfoProvider.ScreenResolution">
+            <summary>
+Gets the screen resolution.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.IPlatformInfoProvider.ViewPortResolution">
+            <summary>
+Gets the Viewport Resolution.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.IPlatformInfoProvider.AnonymousClientId">
+            <summary>
+Gets the value that anonymously identifies a particular user, device, or browser instance. For the web, this is generally stored as a first-party cookie with a two-year expiration. For mobile apps, this is randomly generated for each particular instance of an application install. The value of this field should be a random UUID (version 4) as described in <see href="http://www.ietf.org/rfc/rfc4122.txt" />.
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.IPlatformInfoProvider.OnTracking">
+            <summary>
+Callback that indicates something is about to be logged.
+</summary>
+            <remarks>This allows lazy loading of values that might not be available immediately.</remarks>
+        </member>
+        <member name="E:GoogleAnalytics.IPlatformInfoProvider.ScreenResolutionChanged">
+            <summary>
+Raised to indicate that the <see cref="P:GoogleAnalytics.IPlatformInfoProvider.ScreenResolution" /> has changed.
+</summary>
+        </member>
+        <member name="E:GoogleAnalytics.IPlatformInfoProvider.ViewPortResolutionChanged">
+            <summary>
+Raised to indicate that the <see cref="P:GoogleAnalytics.IPlatformInfoProvider.ViewPortResolution" /> has changed.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.IPlatformInfoProvider">
+            <summary>
+Interface to offer a way to provide all environment and platform level information required by Google Analytics.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Dimensions.Height">
+            <summary>
+Gets the height in pixels.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Dimensions.Width">
+            <summary>
+Creates a new object to store dimensions.
+</summary>
+            <param name="width">The width in pixels.</param>
+            <param name="height">The height in pixels.</param>
+            <summary>
+Gets the width in pixels.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.Dimensions">
+            <summary>
+Dimensions in pixels.
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.Build">
+            <summary>
+Builds a dictionary of parameters and values that can be set on the <see cref="T:GoogleAnalytics.Tracker" /> object.
+</summary>
+            <returns>The dictionary to send to <see cref="M:GoogleAnalytics.Tracker.Send(Windows.Foundation.Collections.IMap`2{System.String^,System.String^})" />.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetPromotionAction(GoogleAnalytics.Ecommerce.PromotionAction)">
+            <summary>
+Adds an action associated with the promotions in a given hit.
+</summary>
+            <param name="action">The action associated with the hit.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetProductAction(GoogleAnalytics.Ecommerce.ProductAction)">
+            <summary>
+Sets a product action for all the products included in this hit. The action and its associated properties affect how the products added through <see cref="M:GoogleAnalytics.HitBuilder.AddProduct(GoogleAnalytics.Ecommerce.Product)" /> are processed. 
+</summary>
+            <param name="action">The product action associated with the hit.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.AddPromotion(GoogleAnalytics.Ecommerce.Promotion)">
+            <summary>
+Adds promotion related information to the hit.
+</summary>
+            <param name="promotion">The promotion related to the hit.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.AddProduct(GoogleAnalytics.Ecommerce.Product)">
+            <summary>
+Adds product information to be sent with a given hit. The action provided affects how the products passed in through this method get processed.
+</summary>
+            <param name="product">The product you wish to add.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetNonInteraction">
+            <summary>
+Indicates that the hit did not involve a user interaction.
+</summary>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetNewSession">
+            <summary>
+Starts a new session for the hit.
+</summary>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetCustomMetric(System.Int32,System.Int64)">
+            <summary>
+Adds a custom metric to the current hit builder. Calling this method with the same index will overwrite the previous metric with the new one. Refer <see href="https://goo.gl/igziD2" /> for details on how to set the custom metrics up.
+</summary>
+            <param name="index">The index/slot in which the metric will be set.</param>
+            <param name="metric">The value of the metric for the given index.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetCustomDimension(System.Int32,System.String)">
+            <summary>
+Adds a custom dimension to the current hit builder. Calling this method with the same index will overwrite the previous dimension with the new one. Refer <see href="https://goo.gl/igziD2" /> for details on how to set the custom dimensions up.
+</summary>
+            <param name="index">The index/slot in which the dimension will be set.</param>
+            <param name="dimension">The value of the dimension for the given index.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.SetAll(Windows.Foundation.Collections.IMap`2{System.String^,System.String^})">
+            <summary>
+Adds a set of key, value pairs to the hit builder. These values will be added to the hit when it is built. This function should only be used for advanced cases where none of the explicit setters work. This function should usually be called after all the explicit setter have been called.
+</summary>
+            <param name="params">A dictionary of all the values to be added to the builder.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.Set(System.String,System.String)">
+            <summary>
+Sets the value for the given parameter name. These values will be added to the hit when it is built. This function should only be used for advanced cases where none of the explicit setters do not work. This function should usually be called after all the explicit setter have been called.
+</summary>
+            <param name="paramName">The parameter name to set the value for.</param>
+            <param name="paramValue">The value associated with the parameter name.</param>
+            <returns>The builder object that you can use to chain calls.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.Get(System.String)">
+            <summary>
+Looks up a value by name from the current instance.
+</summary>
+            <param name="paramName">The parameter name to get the value for.</param>
+            <returns>The value associated with the supplied parameter name.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.CreateTiming(System.String,System.String,Windows.Foundation.IReference`1{Windows.Foundation.TimeSpan},System.String)">
+            <summary>
+Creates a user timing hit to measure app timing and performance.
+</summary>
+            <param name="category">Specifies the user timing category.</param>
+            <param name="variable">Specifies the user timing variable.</param>
+            <param name="value">Specifies the user timing value.</param>
+            <param name="label">Specifies the user timing label.</param>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.CreateSocialInteraction(System.String,System.String,System.String)">
+            <summary>
+Creates a social networking interaction hit.
+</summary>
+            <param name="network">Specifies the social network, for example Facebook or Google Plus.</param>
+            <param name="action">Specifies the social interaction action. For example on Google Plus when a user clicks the +1 button, the social action is 'plus'.</param>
+            <param name="target">Specifies the target of a social interaction. This value is typically a URL but can be any text.</param>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.CreateException(System.String,System.Boolean)">
+            <summary>
+Creates an exception hit to track errors.
+</summary>
+            <param name="description">Specifies the description of an exception.</param>
+            <param name="isFatal">Specifies whether the exception was fatal.</param>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.CreateCustomEvent(System.String,System.String,System.String,System.Int64)">
+            <summary>
+Creates an event hit to track events.
+</summary>
+            <param name="category">Specifies the event category. Must not be empty.</param>
+            <param name="action">Specifies the event action. Must not be empty.</param>
+            <param name="label">Specifies the event label. Optional if null.</param>
+            <param name="value">Specifies the event value. Values must be non-negative. Optional if zero.</param>
+        </member>
+        <member name="M:GoogleAnalytics.HitBuilder.CreateScreenView">
+            <summary>
+Creates a screen view hit.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.HitBuilder">
+            <summary>
+Class to build hits. You can add any of the other fields to the builder using common set and get methods.
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.Tracker.Send(Windows.Foundation.Collections.IMap`2{System.String^,System.String^})">
+            <summary>
+Merges the model values set on this Tracker with params and generates a hit to be sent.
+</summary>
+            <param name="params">Dictionary of hit data to values which are merged with the existing values which are already set (using Set(String, String)). Values in this dictionary will override the values set earlier. The values in this dictionary will not be reused for the subsequent hits. If you need to send a value in multiple hits, you can use the Set(String, String) method.</param>
+            <remarks>The hit may not be dispatched immediately.</remarks>
+        </member>
+        <member name="M:GoogleAnalytics.Tracker.Set(System.String,System.String)">
+            <summary>
+Sets the model value for the given key.
+</summary>
+            <param name="key">The key of the field that needs to be set. It starts with "&amp;" followed by the parameter name. The complete list of fields can be found at <see href="https://goo.gl/M6dK2U" />.</param>
+            <param name="value">A string value to be sent to Google servers. A null value denotes that the value should not be sent over wire.</param>
+        </member>
+        <member name="M:GoogleAnalytics.Tracker.Get(System.String)">
+            <summary>
+Gets the model value for the given key added through <see cref="M:GoogleAnalytics.Tracker.Set(System.String,System.String)" />.
+</summary>
+            <param name="key">The key to retrieve the value for.</param>
+            <returns>The value associated with the key.</returns>
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.SampleRate">
+            <summary>
+Gets or sets the rate at which <see cref="T:GoogleAnalytics.Hit" />s should be excluded for sampling purposes. Default is 100.
+</summary>
+            <remarks>100 means no items should be excluded, 50 means half should be excluded, and 0 means all items should be excluded.</remarks>
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ExperimentVariant">
+            <summary>
+Gets or sets the parameter that specifies that this user has been exposed to a particular variation of an experiment. It should be sent in conjunction with the Experiment ID parameter.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#xvar" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ExperimentId">
+            <summary>
+Gets or sets the parameter that specifies that this user has been exposed to an experiment with the given ID. It should be sent in conjunction with the Experiment Variant parameter.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#xid" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.AppInstallerId">
+            <summary>
+Gets or sets the application installer identifier.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aiid" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.AppVersion">
+            <summary>
+Gets or sets the application version.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#av" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.AppId">
+            <summary>
+Gets or sets the application identifier.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aid" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.AppName">
+            <summary>
+Gets or sets the application name. This field is required for any hit that has app related data (i.e., app version, app ID, or app installer ID). For hits sent to web properties, this field is optional.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#an" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ScreenName">
+            <summary>
+Gets or sets the 'Screen Name' of the screenview hit. On web properties this will default to the unique URL of the page.
+</summary>
+            <remarks>Required for screenview hit type. Note: This parameter is optional on web properties, and required on mobile properties for screenview hits.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#cd" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.Title">
+            <summary>
+Gets or sets the title of the page / document.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#dt" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.Page">
+            <summary>
+Gets or sets the path portion of the page URL.
+</summary>
+            <remarks>Optional. Should begin with '/'.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#dp" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.HostName">
+            <summary>
+Gets or sets the hostname from which content was hosted.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#dh" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.Language">
+            <summary>
+Gets or sets the language.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#ul" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ScreenColors">
+            <summary>
+Gets or sets the screen color depth.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#sd" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.Encoding">
+            <summary>
+Gets or sets the character set used to encode the page / document.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#de" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ViewportSize">
+            <summary>
+Gets or sets the viewable area of the browser / device.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#vp" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ScreenResolution">
+            <summary>
+Gets or sets the screen resolution.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#sr" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.Referrer">
+            <summary>
+Specifies which referral source brought traffic to a website. This value is also used to compute the traffic source. The format of this value is a URL.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#dr" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.LocationOverride">
+            <summary>
+Gets or sets the geographical location of the user. The geographical ID should be a two letter country code or a criteria ID representing a city or region (see http://developers.google.com/analytics/devguides/collection/protocol/v1/geoid). This parameter takes precedent over any location derived from IP address, including the IP Override parameter. An invalid code will result in geographical dimensions to be set to '(not set)'.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#geoid" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.UserAgentOverride">
+            <summary>
+Gets or sets the User Agent of the browser. Note that Google has libraries to identify real user agents. Hand crafting your own agent could break at any time.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#ua" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.IpOverride">
+            <summary>
+Gets or sets the IP address of the user. This should be a valid IP address in IPv4 or IPv6 format. It will always be anonymized just as though anonymize IP had been used.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#uip" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.ClientId">
+            <summary>
+Gets or sets the value that anonymously identifies a particular user, device, or browser instance. For the web, this is generally stored as a first-party cookie with a two-year expiration. For mobile apps, this is randomly generated for each particular instance of an application install. The value of this field should be a random UUID (version 4) as described in <see href="http://www.ietf.org/rfc/rfc4122.txt" />.
+</summary>
+            <remarks>Required for all hit types.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#cid" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.AnonymizeIP">
+            <summary>
+Gets or sets whether the IP address of the sender will be anonymized.
+</summary>
+            <remarks>Optional.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aiid" />
+        </member>
+        <member name="P:GoogleAnalytics.Tracker.PropertyId">
+            <summary>
+Gets or sets the tracking ID / web property ID. The format is UA-XXXX-Y. All collected data is associated by this ID.
+</summary>
+            <remarks>Required for all hit types.</remarks>
+            <seealso href="https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#tid" />
+        </member>
+        <member name="T:GoogleAnalytics.Tracker">
+            <summary>
+Represents an object capable of tracking events for a single Google Analytics property.
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.Resume">
+            <summary>
+Resumes operations after <see cref="M:GoogleAnalytics.AnalyticsManager.SuspendAsync" /> is called.
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.SuspendAsync">
+            <summary>
+Suspends operations and dispatches all pending hits in the queue.
+</summary>
+            <remarks>Call <see cref="M:GoogleAnalytics.AnalyticsManager.Resume" /> when returning from a suspended state to resume operations.</remarks>
+            <returns>Operation returns when all <see cref="T:GoogleAnalytics.Hit" />s have been flushed.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.DispatchAsync">
+            <summary>
+Dispatches all hits in the queue.
+</summary>
+            <returns>Returns once all items that were in the queue at the time the method was called have finished being sent.</returns>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.Clear">
+            <summary>
+Empties the queue of <see cref="T:GoogleAnalytics.Hit" />s waiting to be dispatched.
+</summary>
+            <remarks>If a <see cref="T:GoogleAnalytics.Hit" /> is actively beeing sent, this will not abort the request.</remarks>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.EnqueueHit(Windows.Foundation.Collections.IMap`2{System.String^,System.String^})">
+            <inheritdoc />
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.AutoAppLifetimeMonitoring">
+            <summary>
+Enables (when set to true) automatic dispatching of queued <see cref="T:GoogleAnalytics.Hit" /> on app Suspend, and automatic restart of dispatch timer upon resume.         
+</summary>
+            <remarks>
+Default value is false, since we default to immediate dispatching. See <see cref="P:GoogleAnalytics.AnalyticsManager.DispatchPeriod" /></remarks>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.IsEnabled">
+            <summary>
+Gets or sets whether the dispatcher is enabled. If disabled, hits will be queued but not dispatched.
+</summary>
+            <remarks>Typically this is used to indicate whether or not the network is available.</remarks>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.DispatchPeriod">
+            <summary>
+Gets or sets the frequency at which hits should be sent to the service. Default is immediate.
+</summary>
+            <remarks>Setting to TimeSpan.Zero will cause the hit to get sent immediately.</remarks>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.UserAgent">
+            <summary>
+Gets or sets the user agent request header used by Google Analytics to determine the platform and device generating the hits.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.BustCache">
+            <summary>
+Gets or sets whether a cache buster should be applied to all requests. Default is false.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.PostData">
+            <summary>
+Gets or sets whether data should be sent via POST or GET method. Default is POST.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.ThrottlingEnabled">
+            <summary>
+Gets or sets whether throttling should be used. Default is false.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.IsDebug">
+            <summary>
+Gets or sets whether <see cref="T:GoogleAnalytics.Hit" />s should be sent to the debug endpoint. Default is false.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.IsSecure">
+            <summary>
+Gets or sets whether <see cref="T:GoogleAnalytics.Hit" />s should be sent via SSL. Default is true.
+</summary>
+        </member>
+        <member name="E:GoogleAnalytics.AnalyticsManager.HitMalformed">
+            <summary>
+Provides notification that a <see cref="T:GoogleAnalytics.Hit" /> was malformed and rejected by Google Analytics.
+</summary>
+        </member>
+        <member name="E:GoogleAnalytics.AnalyticsManager.HitSent">
+            <summary>
+Provides notification that a <see cref="T:GoogleAnalytics.Hit" /> has been been successfully sent.
+</summary>
+        </member>
+        <member name="E:GoogleAnalytics.AnalyticsManager.HitFailed">
+            <summary>
+Provides notification that a <see cref="T:GoogleAnalytics.Hit" /> failed to send.
+</summary>
+            <remarks>Failed <see cref="T:GoogleAnalytics.Hit" />s will be added to the queue in order to reattempt at the next dispatch time.</remarks>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.CloseTracker(GoogleAnalytics.Tracker)">
+            <summary>
+Removes and cleans up a given <see cref="T:GoogleAnalytics.Tracker" />.
+</summary>
+            <param name="tracker">The instance to remove and clean up.</param>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.CreateTracker(System.String)">
+            <summary>
+Creates a new <see cref="T:GoogleAnalytics.Tracker" /> using a given property ID. 
+</summary>
+            <param name="propertyId">The property ID that the <see cref="T:GoogleAnalytics.Tracker" /> should log to.</param>
+            <returns>The new or existing instance keyed on the property ID.</returns>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.PlatformInfoProvider">
+            <summary>
+Gets the instance of <see cref="T:GoogleAnalytics.IPlatformInfoProvider" /> used by the <see cref="T:GoogleAnalytics.Tracker" /> instantiated by this manager.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.AppOptOut">
+            <summary>
+True when the user has opted out of analytics, this disables all tracking activities. 
+</summary>
+            <remarks>See Google Analytics usage guidelines for more information.</remarks>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.AutoTrackNetworkConnectivity">
+            <summary>
+Enables (when set to true) listening to network connectivity events to have trackers behave accordingly to their connectivity status.  
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.ReportUncaughtExceptions">
+            <summary>
+Enables (when set to true) automatic catching and tracking of Unhandled Exceptions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.AnalyticsManager.Current">
+            <summary>
+Shared, singleton instance of AnalyticsManager 
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.AnalyticsManager.#ctor(GoogleAnalytics.IPlatformInfoProvider)">
+            <summary>
+Instantiates a new instance of <see cref="T:GoogleAnalytics.AnalyticsManager" /></summary>
+            <param name="platformInfoProvider"> The platform info provider to be used by this Analytics Manager. Can not be null.</param>
+        </member>
+        <member name="T:GoogleAnalytics.AnalyticsManager">
+            <summary>
+Provides shared infrastrcuture for <see cref="T:GoogleAnalytics.Tracker" /> in a Windows 10 Universal Windows app 
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.HitMalformedEventArgs.Hit">
+            <summary>
+Gets the <see cref="P:GoogleAnalytics.HitMalformedEventArgs.Hit" /> associated with the event.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.HitMalformedEventArgs.HttpStatusCode">
+            <summary>
+Gets the HTTP status code that may provide more information about the problem.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.HitMalformedEventArgs">
+            <summary>
+Supplies additional information when <see cref="P:GoogleAnalytics.HitMalformedEventArgs.Hit" />s are malformed and cannot be sent.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.HitSentEventArgs.Hit">
+            <summary>
+Gets the <see cref="P:GoogleAnalytics.HitSentEventArgs.Hit" /> associated with the event.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.HitSentEventArgs.Response">
+            <summary>
+Gets the response text.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.HitSentEventArgs">
+            <summary>
+Supplies additional information when <see cref="P:GoogleAnalytics.HitSentEventArgs.Hit" />s are successfully sent.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.HitFailedEventArgs.Hit">
+            <summary>
+Gets the <see cref="P:GoogleAnalytics.HitFailedEventArgs.Hit" /> associated with the event.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.HitFailedEventArgs.Error">
+            <summary>
+Gets the <see cref="T:Platform.Exception" /> thrown when the failure occurred.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.HitFailedEventArgs">
+            <summary>
+Supplies additional information when <see cref="P:GoogleAnalytics.HitFailedEventArgs.Hit" />s fail to send.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.IServiceManager">
+            <summary>
+Interface for a service manager used to send hits to Google Analytics.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Hit.TimeStamp">
+            <summary>
+Gets the timestamp that the event was created.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Hit.Data">
+            <summary>
+Gets the key value pairs to send to Google Analytics.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.Hit">
+            <summary>
+Represents a single event to track.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Variant">
+            <summary>
+Gets or sets the variant of the product.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Quantity">
+            <summary>
+Gets or sets the quantity of the product.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Price">
+            <summary>
+Gets or sets the price of the product.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Position">
+            <summary>
+Gets or sets the position of the product on the page/product impression list etc.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Name">
+            <summary>
+Gets or sets the name that is used to identify the product in GA reports.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Id">
+            <summary>
+Gets or sets the id that is used to identify a product in GA reports.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.CustomMetrics">
+            <summary>
+Gets or sets the custom metrics associated with the product.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.CustomDimensions">
+            <summary>
+Gets or sets the custom dimensions associated with the product.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.CouponCode">
+            <summary>
+Gets or sets the coupon code associated with the product.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Category">
+            <summary>
+Gets or sets the category associated with the product in GA reports.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.Product.Brand">
+            <summary>
+Gets or sets the brand associated with the product in GA reports.
+</summary>
+        </member>
+        <member name="T:GoogleAnalytics.Ecommerce.Product">
+            <summary>
+Class to construct product related information for a Google Analytics hit. Use this class to report information about products sold by merchants or impressions of products seen by users. Instances of this class can be associated with both <see cref="T:GoogleAnalytics.Ecommerce.ProductAction" />s via addProduct(Product) and Product Impressions via addImpression(Product, String).
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.TransactionTax">
+            <summary>
+Gets or sets the transaction's total tax. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.TransactionShipping">
+            <summary>
+Gets or sets the transaction's shipping costs. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.TransactionRevenue">
+            <summary>
+Gets or sets the transaction's total revenue. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.TransactionId">
+            <summary>
+The unique id associated with the transaction. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.TransactionCouponCode">
+            <summary>
+Gets or sets the coupon code used in a transaction. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.TransactionAffiliation">
+            <summary>
+Gets or sets the transaction's affiliation value. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.ProductListSource">
+            <summary>
+Gets or sets the list source name associated with the products in the analytics hit. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Detail" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Click" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.ProductActionList">
+            <summary>
+Gets or sets the list name associated with the products in the analytics hit. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Detail" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Click" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.CheckoutStep">
+            <summary>
+Gets or sets the checkout processes's progress. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Checkout" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.CheckoutOption" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.CheckoutOptions">
+            <summary>
+Gets the label associated with the checkout. This value is used for <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.Checkout" /> and <see cref="F:GoogleAnalytics.Ecommerce.ActionEnum.CheckoutOption" /> actions.
+</summary>
+        </member>
+        <member name="P:GoogleAnalytics.Ecommerce.ProductAction.Action">
+            <summary>
+Gets the product action for all the products included in the hit.
+</summary>
+        </member>
+        <member name="M:GoogleAnalytics.Ecommerce.ProductAction.#ctor(GoogleAnalytics.Ecommerce.ActionEnum)">
+            <summary>
+Creates a new instance of <see cref="T:GoogleAnalytics.Ecommerce.ProductAction" /> with the product action for all the products included in the hit. Valid values include "detail", "click", "add", "remove", "checkout", "checkout_option", "purchase" and "refund". All these values are also defined in this class for ease of use. You also also send additional values with the hit for some specific actions. See the action documentation for details.
+</summary>
+            <param name="action">The action type to send.</param>
+        </member>
+        <member name="T:GoogleAnalytics.Ecommerce.ProductAction">
+            <summary>
+Class to construct transaction/checkout or other product interaction related information for a Google Analytics hit. Use this class to report information about products sold, viewed or refunded. This class is intended to be used with <see cref="T:GoogleAnalytics.Ecommerce.Product" />. Instances of this class can be associated with HitBuilder::SetProductAction"/&gt;.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Remove">
+            <summary>
+Action to use when a product is removed from the cart.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Refund">
+            <summary>
+Action to use while reporting refunded transactions to GA.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Purchase">
+            <summary>
+Action that is used to report all the transaction data to GA.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Detail">
+            <summary>
+Action to use when the user views detailed descriptions of products.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Click">
+            <summary>
+Action to use when the user clicks on a set of products.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.CheckoutOption">
+            <summary>
+Action to be used for supplemental checkout data that needs to be provided after a checkout hit.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Checkout">
+            <summary>
+Action to use for hits with checkout data.
+</summary>
+        </member>
+        <member name="F:GoogleAnalytics.Ecommerce.ActionEnum.Add">
+            <summary>
+Action to use when a product is added to the cart.
+</summary>
+        </member>
+    </members>
+</doc>
