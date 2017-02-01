@@ -5,15 +5,15 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.Core", "..\Managed\GoogleAnalytics.Core\GoogleAnalytics.Core.csproj", "{A6BE52D4-4652-4680-8E0D-9D1D1EB3AD1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.Sample", "..\Managed\GoogleAnalytics.Sample\GoogleAnalytics.Sample.csproj", "{82A33996-59A5-4CA8-BED7-7EDC914B42EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.Sample.Managed", "..\Managed\GoogleAnalytics.Sample\GoogleAnalytics.Sample.Managed.csproj", "{82A33996-59A5-4CA8-BED7-7EDC914B42EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.UnitTests", "..\Managed\GoogleAnalytics.UnitTests\GoogleAnalytics.UnitTests.csproj", "{C5637A31-A489-4A07-B4B3-D34CF0CC1A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.UWP", "..\Managed\GoogleAnalytics.UWP\GoogleAnalytics.UWP.csproj", "{EF2863F0-036B-48F1-A402-77570A1A2823}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.UWP.Managed", "..\Managed\GoogleAnalytics.UWP\GoogleAnalytics.UWP.Managed.csproj", "{EF2863F0-036B-48F1-A402-77570A1A2823}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoogleAnalytics.Sample.Native", "..\Native\GoogleAnalytics.Sample.Native\GoogleAnalytics.Sample.Native.vcxproj", "{4CE2FC45-AB85-43F1-AC35-A2BA466EEA18}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoogleAnalytics.Native.Win10", "..\Native\GoogleAnalytics.UWP\GoogleAnalytics.vcxproj", "{334C843A-20F3-409C-951B-E548EC3166CD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoogleAnalytics.UWP.Native", "..\Native\GoogleAnalytics.UWP\GoogleAnalytics.vcxproj", "{334C843A-20F3-409C-951B-E548EC3166CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleAnalytics.UnitTests_NativeSDK", "..\Native\GoogleAnalytics.UnitTests_NativeSDK\GoogleAnalytics.UnitTests_NativeSDK.csproj", "{2B50EB8C-66D1-44F2-82CC-AAD009B91189}"
 EndProject
