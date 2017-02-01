@@ -389,10 +389,6 @@ namespace GoogleAnalytics
         /// <remarks>The hit may not be dispatched immediately.</remarks>
         public void Send(IDictionary<string, string> @params)
         {
-            if (@params.ContainsKey("cd"))
-            {
-                ScreenName = @params["cd"];
-            }
             if (!string.IsNullOrEmpty(PropertyId))
             {
                 if (!IsSampledOut())

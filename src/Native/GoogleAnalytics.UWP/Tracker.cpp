@@ -45,10 +45,6 @@ void Tracker::platformTrackingInfo_ScreenResolutionChanged(Object^ sender, Objec
 
 void Tracker::Send(IMap<String^, String^>^ params)
 {
-	if (params->HasKey("cd"))
-	{
-		ScreenName = params->Lookup("cd");
-	}
 	if (propertyId)
 	{
 		if (!IsSampledOut())

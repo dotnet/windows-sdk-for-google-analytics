@@ -63,7 +63,7 @@ namespace GoogleAnalytics
 		/// <summary>
 		/// Creates a screen view hit.
 		/// </summary>
-		/// <param name="screenName">Specifies the 'Screen Name' of the screenview hit and all subsequent hits. Note: this can be null if you prefer to set the ScreenName property on the Tracker instead.</param>
+        /// <param name="screenName">Specifies the 'Screen Name' of the screenview hit. Note: this will not affect subsequent hits. To do this, set the ScreenName property on the Tracker instead.</param>
 		static HitBuilder^ CreateScreenView(Platform::String^ screenName);
 		
 		/// <summary>
