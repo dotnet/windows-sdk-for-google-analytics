@@ -54,12 +54,17 @@ namespace GoogleAnalytics
 		property int ProductCount;
 
 		property int PromotionCount;
-		 
-
+		
 		/// <summary>
 		/// Creates a screen view hit.
 		/// </summary>
 		static HitBuilder^ CreateScreenView();
+
+		/// <summary>
+		/// Creates a screen view hit.
+		/// </summary>
+		/// <param name="screenName">Specifies the 'Screen Name' of the screenview hit and all subsequent hits. Note: this can be null if you prefer to set the ScreenName property on the Tracker instead.</param>
+		static HitBuilder^ CreateScreenView(Platform::String^ screenName);
 		
 		/// <summary>
 		/// Creates an event hit to track events.
