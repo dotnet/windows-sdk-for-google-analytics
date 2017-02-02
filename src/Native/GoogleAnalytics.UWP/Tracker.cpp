@@ -30,7 +30,7 @@ Tracker::Tracker(String^ propertyId, IPlatformInfoProvider^ platformInfoProvider
 		ViewportSize = platformInfoProvider->ViewPortResolution;
 		viewPortResolutionChangedEventToken = platformInfoProvider->ViewPortResolutionChanged += ref new EventHandler<Object^>(this, &Tracker::platformTrackingInfo_ViewPortResolutionChanged);
 		screenResolutionChangedEventToken = platformInfoProvider->ScreenResolutionChanged += ref new EventHandler<Object^>(this, &Tracker::platformTrackingInfo_ScreenResolutionChanged);
-	} 
+	}
 }
 
 void Tracker::platformTrackingInfo_ViewPortResolutionChanged(Object^ sender, Object^ args)

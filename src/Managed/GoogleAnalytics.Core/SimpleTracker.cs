@@ -328,7 +328,7 @@ namespace GoogleAnalytics
         {
             data[key] = value;
         }
-        
+
         IDictionary<string, string> AddRequiredHitData(IDictionary<string, string> @params)
         {
             var result = new Dictionary<string, string>();

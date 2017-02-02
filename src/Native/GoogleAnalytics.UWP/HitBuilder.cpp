@@ -71,6 +71,14 @@ HitBuilder^ HitBuilder::CreateScreenView()
 	return ref new HitBuilder(data);
 }
 
+HitBuilder^ HitBuilder::CreateScreenView(String^ screenName)
+{
+	auto data = ref new Map<String^, String^>();
+	data->Insert("t", HitBuilder::HitType_Screenview);
+	if (screenName) data->Insert("cd", screenName);
+	return ref new HitBuilder(data);
+}
+
 HitBuilder^ HitBuilder::CreateCustomEvent(String^ category, String^ action, String^ label, long long value)
 {
 	auto data = ref new Map<String^, String^>();

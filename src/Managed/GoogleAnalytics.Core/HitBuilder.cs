@@ -86,9 +86,13 @@ namespace GoogleAnalytics
         /// <summary>
         /// Creates a screen view hit.
         /// </summary>
-        public static HitBuilder CreateScreenView()
+        /// <param name="screenName">Specifies the 'Screen Name' of the screenview hit. Note: this will not affect subsequent hits. To do this, set the ScreenName property on the <see cref="Tracker"/> instead.</param>
+        public static HitBuilder CreateScreenView(string screenName = null)
         {
-            return new HitBuilder(new Dictionary<string, string>() { { "t", HitType_Screenview } });
+            var data = new Dictionary<string, string>();
+            data.Add("t", HitType_Screenview);
+            if (screenName != null) data.Add("cd", screenName);
+            return new HitBuilder(data);
         }
 
         /// <summary>
