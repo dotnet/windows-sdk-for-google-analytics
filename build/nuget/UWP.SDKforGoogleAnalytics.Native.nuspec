@@ -2,70 +2,47 @@
 
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.5">
-
     <id>UWP.SDKforGoogleAnalytics.Native</id>
-
-<!--TODO Version INfo --> 
-    <version>0.0.0-SpecificVersionOnCommandLine</version>
-    <title>UWP SDK for Google Analytics - this is the WinRT package (for C++, Javascript apps)</title>
-    <authors>Tim Greenfield</authors>
-    <owners>Tim Greenfield</owners>
-<!--TODO --> 
-    <iconUrl>http://githubusercontent.com/dotnet/WinGASDK/master/TODO_logo_240.png</iconUrl>
-<!--TODO --> 
-    <licenseUrl>http://googleanalyticssdk.codeplex.com/license</licenseUrl>
-<!--TODO --> 
-    <projectUrl>http://googleanalyticssdk.codeplex.com/</projectUrl>
-
+    <version>0.0.0-SpecifyVersionOnCommandline</version>
+    <title>Windows SDK for Google Analytics -Windows 10 UWP WinRT (for C++, Javascript)</title>
+    <authors>.NET Foundation</authors>
+    <owners>.NET Foundation</owners>
+    <licenseUrl>http://github.com/dotnet/windows-sdk-for-google-analytics/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/dotnet/windows-sdk-for-google-analytics</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Windows SDK for Google Analytics with support for Google Universal Analytics Measurement Protocol</description>
-<!--TODO --> 
-    <releaseNotes>More info on CodePlex at http://googleanalyticssdk.codeplex.com</releaseNotes>
+    <description>C#, Windows 10 SDK for Google Analytics implementing the Google Universal Analytics Measurement Protocol</description>
     <copyright>Copyright 2016</copyright>
-    <tags>google analtyics universal analytics measurement protocol Win10 UWP WUniversal native</tags> 
-  </metadata>  
-<!--Here are the files we need--> 
-    <files> 
+    <tags>google analtyics universal analytics measurement protocol Win10 UWP Universal C++ native Javascript </tags>
+    <releaseNotes>More info at http://github.com/dotnet/windows-sdk-for-google-analytics </releaseNotes>
+    <!--<iconUrl>http://githubusercontent.com/dotnet/WinGASDK/master/TODO_logo_240.png</iconUrl>-->
+  </metadata>
 
-<!-- The lib file gets copied as a reference --> 
-<!-- NOTE: in C++ projects this is configured via Linker -> Windows Meta-data Settting.. 
-	The convention is for the file to be the same as the Root namespace..  so
-	in our case this won't match the .dll names.. but this is OK. 
--->
-      
-<!-- Targets file-->
-      
-      <file target="build\uap\UWP.SDKforGoogleAnalytics.Native.targets"
+
+  <files>
+
+    <file target="build\uap\UWP.SDKforGoogleAnalytics.Native.targets"
             src="..\..\build\nuget\UWP.SDKforGoogleAnalytics.Native.targets" />
- 
+
+
     <file target="lib\uap10.0\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
-      
-    
-<!-- JAIMERTODO: intellisense files --> 
-      
-      
-<!-- JAIMERTODO: pdb files -->
-      
-<!-- JAIMERTODO: pri files --> 
-
-<!-- platform specific -->  
-      <file target="runtimes\win10-arm\native\GoogleAnalytics.dll" src="ARM\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
-      <file target="runtimes\win10-x64\native\GoogleAnalytics.dll" src="x64\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
-      <file target="runtimes\win10-x86\native\GoogleAnalytics.dll" src="release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
-
-<!-- JS Workaround, we must repeat these files due to limited support in Javascript for nuget --> 
-      <file target="ref\uap10.0\win10-arm\native\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
-      <file target="ref\uap10.0\win10-x86\native\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
-      <file target="ref\uap10.0\win10-x64\native\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
+    <file target="lib\uap10.0\GoogleAnalytics.xml"      src="GoogleAnalytics.UWP\GoogleAnalytics.UWP.Native.xml" />
 
 
-      <file target="ref\uap10.0\win10-arm\native\GoogleAnalytics.dll" src="ARM\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
-      <file target="ref\uap10.0\win10-x64\native\GoogleAnalytics.dll" src="x64\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
-      <file target="ref\uap10.0\win10-x86\native\GoogleAnalytics.dll" src="release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
-<!-- End of JS Work Around -->
+    <file target="runtimes\win10-arm\native\GoogleAnalytics.dll" src="ARM\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
+    <file target="runtimes\win10-x64\native\GoogleAnalytics.dll" src="x64\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
+    <file target="runtimes\win10-x86\native\GoogleAnalytics.dll" src="release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
 
-    </files> 
- 
-  
-  
+
+    <!-- JS Workaround, we must repeat these files due to limited support in Javascript for nuget -->
+    <file target="ref\uap10.0\win10-arm\native\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
+    <file target="ref\uap10.0\win10-x86\native\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
+    <file target="ref\uap10.0\win10-x64\native\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
+
+
+    <file target="ref\uap10.0\win10-arm\native\GoogleAnalytics.dll" src="ARM\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
+    <file target="ref\uap10.0\win10-x64\native\GoogleAnalytics.dll" src="x64\release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
+    <file target="ref\uap10.0\win10-x86\native\GoogleAnalytics.dll" src="release\GoogleAnalytics\GoogleAnalytics.UWP.Native.dll" />
+    <!-- End of JS Work Around -->
+
+  </files>
 </package>
