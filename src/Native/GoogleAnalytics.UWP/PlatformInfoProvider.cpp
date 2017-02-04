@@ -10,6 +10,7 @@
 
 using namespace GoogleAnalytics;
 using namespace Platform;
+using namespace Windows::System;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::Foundation;
@@ -226,7 +227,6 @@ String^ PlatformInfoProvider::ConstructUserAgent()
 {
 	auto sysInfo = ref new Windows::Security::ExchangeActiveSyncProvisioning::EasClientDeviceInformation();
 	auto package = Windows::ApplicationModel::Package::Current;
-	String^ architecture = package->Id->Architecture.ToString();
 	auto ai = Windows::System::Profile::AnalyticsInfo::VersionInfo;
 	String^ sv = ai->DeviceFamilyVersion;
 
@@ -237,14 +237,20 @@ String^ PlatformInfoProvider::ConstructUserAgent()
 
 	if (ai->DeviceFamily == "Windows.Desktop") {
 		String^ uaArchitecture;
-		if (architecture == "X64") {
+		switch (package->Id->Architecture)
+		{
+		case ProcessorArchitecture::X64:
 			uaArchitecture = "Win64; X64";
-		}
-		else if(architecture == "X86") {
-			uaArchitecture = "Win86; X86";
-		}
-		else {
-			uaArchitecture = architecture;
+			break;
+		case ProcessorArchitecture::X86:
+			uaArchitecture = "Win32; X86";
+			break;
+		case ProcessorArchitecture::Arm:
+			uaArchitecture = "ARM";
+			break;
+		default:
+			uaArchitecture = "Win64; X64";
+			break;
 		}
 		return "Mozilla/5.0 (Windows NT " + systemVersion + "; " + uaArchitecture + "; " + sysInfo->SystemManufacturer + "; " + sysInfo->SystemProductName + ")";
 	}
@@ -255,6 +261,6 @@ String^ PlatformInfoProvider::ConstructUserAgent()
 		return "Mozilla/5.0 (Windows NT " + systemVersion + "; Win64; X64; Xbox; " + sysInfo->SystemProductName + ")";
 	}
 	else {
-		return "Mozilla/5.0 (Windows " + systemVersion + "; " + architecture + "; " + sysInfo->SystemManufacturer + "; " + sysInfo->SystemProductName + ")";
+		return "Mozilla/5.0 (Windows " + systemVersion + "; " + package->Id->Architecture.ToString() + "; " + sysInfo->SystemManufacturer + "; " + sysInfo->SystemProductName + ")";
 	}
 }
