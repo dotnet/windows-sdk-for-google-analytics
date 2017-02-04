@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="9fec82d3-60aa-41ef-adde-1349dfc7e543" Version="1.0.0.0" Publisher="CN=jaimer" />
+  <Identity Name="9fec82d3-60aa-41ef-adde-1349dfc7e543" Version="1.0.0.0" Publisher="CN=GoogleAnalytics.Sample.Javascript_TemporaryKey" />
   <mp:PhoneIdentity PhoneProductId="9fec82d3-60aa-41ef-adde-1349dfc7e542" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>GoogleAnalytics.Sample.Javascript</DisplayName>
-    <PublisherDisplayName>jaimer</PublisherDisplayName>
+    <PublisherDisplayName>dotnet</PublisherDisplayName>
     <Logo>images\storelogo.png</Logo>
   </Properties>
   <Dependencies>
