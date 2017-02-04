@@ -1,29 +1,21 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata minClientVersion="2.5">
-    
+  <metadata minClientVersion="2.5">    
     <id>UWP.SDKforGoogleAnalytics.Managed</id>
-
-<!--TODO Version INfo --> 
-    <version>0.0.0-SpecificVersionOnCommandLine</version>
-    <title>UWP SDK for Google Analytics - this is the managed package (for C# apps)</title>
-    <authors>Tim Greenfield</authors>
-    <owners>Tim Greenfield</owners>
-<!--TODO --> 
-    <iconUrl>http://githubusercontent.com/dotnet/WinGASDK/master/TODO_logo_240.png</iconUrl>
-<!--TODO --> 
-    <licenseUrl>http://googleanalyticssdk.codeplex.com/license</licenseUrl>
-<!--TODO --> 
-    <projectUrl>http://googleanalyticssdk.codeplex.com/</projectUrl>
-
+    <version>0.0.0-SpecifyVersionOnCommandline</version>
+    <title>Windows SDK for Google Analytics -Windows 10 UWP(C#)</title>
+    <authors>.NET Foundation</authors>
+    <owners>.NET Foundation</owners>
+    <licenseUrl>http://github.com/dotnet/windows-sdk-for-google-analytics/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/dotnet/windows-sdk-for-google-analytics</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Windows SDK for Google Analytics with support for Google Universal Analytics Measurement Protocol</description>
-<!--TODO --> 
-    <releaseNotes>More info on CodePlex at http://googleanalyticssdk.codeplex.com</releaseNotes>
+    <description>C#, Windows 10 SDK for Google Analytics implementing the Google Universal Analytics Measurement Protocol</description>
     <copyright>Copyright 2016</copyright>
-    <tags>google analtyics universal analytics measurement protocol Win10 UWP Universal</tags>    
+    <tags>google analtyics universal analytics measurement protocol Win10 UWP Universal C# Managed</tags>    
+    <releaseNotes>More info at http://github.com/dotnet/windows-sdk-for-google-analytics </releaseNotes> 
+    <!--<iconUrl>http://githubusercontent.com/dotnet/WinGASDK/master/TODO_logo_240.png</iconUrl>-->
   </metadata>  
-<!--Here are the files we need--> 
+
 <files> 
 
 <!-- The lib file gets copied as a reference -->      

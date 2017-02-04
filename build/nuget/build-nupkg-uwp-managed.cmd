@@ -24,9 +24,7 @@ SET PACKAGENAME=UWP.SDKforGoogleAnalytics.Managed
 SET /p VERSION=<VERSION
 SET BIN=bin
 SET OUTDIR=..\..\src\Managed\bin
-SET LICENSE_URL=http://github.com/dotnet/windows-sdk-for-google-analytics/blob/master/LICENSE.txt
-SET REQUIRE_LICENSE_ACCEPTANCE=false
-)
+ 
 
 IF NOT "%1" == "" (
     SET VERSION=%VERSION%-%1
@@ -36,9 +34,8 @@ SET NUGET_ARGS=^
     -nopackageanalysis ^
     -basepath ..\..\src\Managed ^
     -outputdirectory %OUTDIR% ^
-    -version %VERSION% ^
-    -properties bin=%BIN%;LicenseUrl=%LICENSE_URL%;RequireLicenseAcceptance=%REQUIRE_LICENSE_ACCEPTANCE%
- 
+    -version %VERSION% 
+     
 
 nuget pack %PACKAGENAME%.nuspec %NUGET_ARGS%
     IF %ERRORLEVEL% NEQ 0 GOTO END
