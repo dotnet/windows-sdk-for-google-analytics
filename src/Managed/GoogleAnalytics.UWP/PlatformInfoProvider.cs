@@ -4,6 +4,7 @@ using Windows.ApplicationModel;
 using Windows.Devices.Input;
 using Windows.Graphics.Display;
 using Windows.Storage;
+using Windows.System;
 using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -170,7 +171,6 @@ namespace GoogleAnalytics
             ulong v2 = (v & 0x0000FFFF00000000L) >> 32;
 
             string systemVersion = $"{v1}.{v2}";
-            string architecture = Package.Current.Id.Architecture.ToString();
 
             switch (ai.DeviceFamily)
             {
@@ -179,17 +179,20 @@ namespace GoogleAnalytics
                     // This: Mozilla/5.0 (Windows NT 10.0; Win64; X64; Microsoft Corporation; Surface Pro 4)
 
                     String uaArchitecture;
-                    if (architecture == "X64")
+                    switch (Package.Current.Id.Architecture)
                     {
-                        uaArchitecture = "Win64; X64";
-                    }
-                    else if (architecture == "X86")
-                    {
-                        uaArchitecture = "Win86; X86";
-                    }
-                    else
-                    {
-                        uaArchitecture = architecture;
+                        case ProcessorArchitecture.X64:
+                            uaArchitecture = "Win64; X64";
+                            break;
+                        case ProcessorArchitecture.X86:
+                            uaArchitecture = "Win32; X86";
+                            break;
+                        case ProcessorArchitecture.Arm:
+                            uaArchitecture = "ARM";
+                            break;
+                        default:
+                            uaArchitecture = "Win64; X64";
+                            break;
                     }
 
                     return $"Mozilla/5.0 (Windows NT {systemVersion}; {uaArchitecture}; {sysInfo.SystemManufacturer}; {sysInfo.SystemProductName})";
@@ -204,7 +207,7 @@ namespace GoogleAnalytics
 
                     return $"Mozilla/5.0 (Windows NT {systemVersion}; Win64; X64; Xbox; {sysInfo.SystemProductName})";
                 default:
-                    return $"Mozilla/5.0 (Windows {systemVersion}; {architecture}; {sysInfo.SystemManufacturer}; {sysInfo.SystemProductName})";
+                    return $"Mozilla/5.0 (Windows {systemVersion}; {Package.Current.Id.Architecture.ToString()}; {sysInfo.SystemManufacturer}; {sysInfo.SystemProductName})";
             }
         }
     }
