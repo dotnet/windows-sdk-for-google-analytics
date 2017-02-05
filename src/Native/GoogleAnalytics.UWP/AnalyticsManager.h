@@ -234,6 +234,15 @@ namespace GoogleAnalytics
 
 		std::unordered_map<Platform::String^, GoogleAnalytics::Tracker^> trackers;
 
+		Windows::UI::Core::CoreDispatcher^ dispatcher; 
+		bool fireEventsOnUIThread; 
+		
+		int   hitSentListenerCount, hitFailedListenerCount, hitMalformedListenerCount; 
+
+		event Windows::Foundation::EventHandler<GoogleAnalytics::HitSentEventArgs^>^ internalHitSentEventHandler; 
+		event Windows::Foundation::EventHandler<GoogleAnalytics::HitFailedEventArgs^>^ internalHitFailedEventHandler;
+		event Windows::Foundation::EventHandler<GoogleAnalytics::HitMalformedEventArgs^>^ internalHitMalformedEventHandler;
+
 	public:
 		
 		/// <summary>
@@ -309,19 +318,32 @@ namespace GoogleAnalytics
 		/// <summary>
 		/// Provides notification that a <see cref="Hit"/> failed to send.
 		/// </summary>
-		/// <remarks>Failed <see cref="Hit"/>s will be added to the queue in order to reattempt at the next dispatch time.</remarks>
-		event Windows::Foundation::EventHandler<GoogleAnalytics::HitFailedEventArgs^>^ HitFailed;
+		/// <remarks>Failed <see cref="Hit"/>s will be added to the queue in order to reattempt at the next dispatch time.</remarks>		
+		event Windows::Foundation::EventHandler<HitFailedEventArgs^>^ HitFailed {
+			Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<HitFailedEventArgs^>^ handler);
+			void remove(Windows::Foundation::EventRegistrationToken token); 
+			void raise(Platform::Object^ sender, HitFailedEventArgs^ args);
+		}
 
 		/// <summary>
 		/// Provides notification that a <see cref="Hit"/> has been been successfully sent.
 		/// </summary>
-		event Windows::Foundation::EventHandler<GoogleAnalytics::HitSentEventArgs^>^ HitSent;
+		event Windows::Foundation::EventHandler<HitSentEventArgs^>^ HitSent
+		{
+			Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<HitSentEventArgs^>^ handler);  
+			void remove(Windows::Foundation::EventRegistrationToken token); 			 
+			void raise(Platform::Object^ sender, HitSentEventArgs^ args);
+		}
 
 		/// <summary>
 		/// Provides notification that a <see cref="Hit"/> was malformed and rejected by Google Analytics.
-		/// </summary>
-		event Windows::Foundation::EventHandler<GoogleAnalytics::HitMalformedEventArgs^>^ HitMalformed;
-
+		/// </summary>		
+		event Windows::Foundation::EventHandler<HitMalformedEventArgs^>^ HitMalformed
+		{
+			Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<GoogleAnalytics::HitMalformedEventArgs^>^ handler);
+			void remove(Windows::Foundation::EventRegistrationToken token);
+			void raise(Platform::Object^ sender, HitMalformedEventArgs^ args);
+		}
 		/// <summary>
 		/// Gets or sets whether <see cref="Hit"/>s should be sent via SSL. Default is true.
 		/// </summary>
@@ -383,6 +405,20 @@ namespace GoogleAnalytics
 			bool get();
 			void set(bool value);
 		}
+
+
+		/// <summary>		
+		/// When set to true, <see cref="AnalyticsManager::HitSent" />, <see cref="AnalyticsManager::HitMalformed" />, and <see cref="AnalyticsManager::Failed"/> will fire back into UI thread.          
+		/// </summary>
+		/// <remarks>
+		/// You must set this property to true to listen to these events from a Javascript app.
+		/// </remarks>
+		property bool FireEventsOnUIThread
+		{
+			bool get();
+			void set(bool value);
+		}
+
 
 		/// <inheritdoc/>
 		virtual void EnqueueHit(Windows::Foundation::Collections::IMap<Platform::String^, Platform::String^>^ params);

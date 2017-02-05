@@ -59,7 +59,7 @@ namespace GoogleAnalytics.UnitTests
             var mockServiceManager = new MockServiceManager();
             var tracker = new Tracker("fakePropertyId", null, mockServiceManager);
             const string screenName = "testscreen";
-            const string referrer = "refererr";
+            const string referrer = "referrer";
             const string language = "de-de";
             const string ipOverride = "127.0.0.1";
             const string appInstallerId = "appInstallerid";
@@ -95,6 +95,8 @@ namespace GoogleAnalytics.UnitTests
             // TODO: test additional fields
 
         }
+
+        
 
         [TestMethod]
         public void SendOverrideWithTracker()

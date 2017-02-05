@@ -49,7 +49,10 @@ AnalyticsManager::AnalyticsManager(GoogleAnalytics::IPlatformInfoProvider^ platf
 	hitTokenBucket(ref new TokenBucket(60, .5)),
 	reportUncaughtExceptions(false),
 	autoTrackNetworkConnectivity(false), 
-	autoAppLifetimeMonitoring(false) 
+	autoAppLifetimeMonitoring(false) , 
+	fireEventsOnUIThread(false), 
+	dispatcher(nullptr), 
+	hitSentListenerCount(0), hitMalformedListenerCount(0), hitFailedListenerCount(0)
 {
 	this->platformTrackingInfo = platformInfoProvider;
 	DefaultTracker = nullptr;
@@ -131,6 +134,34 @@ void AnalyticsManager::IsEnabled::set(bool value)
 	}
 }
 
+bool AnalyticsManager::FireEventsOnUIThread::get()
+{
+	return fireEventsOnUIThread;
+}
+
+void AnalyticsManager::FireEventsOnUIThread::set(bool value)
+{
+	if (fireEventsOnUIThread != value)
+	{
+		if (value)
+		{
+			if (dispatcher == nullptr)
+			{
+				auto window = Windows::UI::Core::CoreWindow::GetForCurrentThread(); 
+				if (window != nullptr)
+				{
+					dispatcher = window->Dispatcher;
+				}
+
+				if (dispatcher == nullptr)
+				{
+					throw ref new Platform::WrongThreadException("FireEventsOnUIThread must be called from UI Thread");
+				}
+			} 
+		}		
+		fireEventsOnUIThread = value;  
+	}
+}
 
 bool AnalyticsManager::AutoAppLifetimeMonitoring::get()
 {
@@ -372,8 +403,18 @@ void AnalyticsManager::OnHitFailed(Hit^ payload, Exception^ exception)
 
 void AnalyticsManager::OnHitSent(Hit^ payload, HttpResponseMessage^ response)
 {
-	create_task([response]() { return response->Content->ReadAsStringAsync(); }).then([this, payload](task<Platform::String^> t) {
-		HitSent(this, ref new HitSentEventArgs(payload, t.get()));
+	create_task([response]() { return response->Content->ReadAsStringAsync(); }).then([this, payload](task<Platform::String^> t) {				 
+		/*if (FireEventsOnUIThread )
+		{			 
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, payload, t]()
+			{
+				HitSent(this, ref new HitSentEventArgs(payload, t.get()));
+			}));			 
+		}
+		else */
+			HitSent(this, ref new HitSentEventArgs(payload, t.get()));
 	});
 }
 
@@ -524,4 +565,101 @@ void AnalyticsManager::UpdateConnectionStatus()
 			break;
 		}
 	}
+}
+
+Windows::Foundation::EventRegistrationToken AnalyticsManager::HitFailed::add(Windows::Foundation::EventHandler<GoogleAnalytics::HitFailedEventArgs^>^ handler)
+{
+	hitFailedListenerCount++;
+	return internalHitFailedEventHandler += handler;
+}
+
+void AnalyticsManager::HitFailed::remove(Windows::Foundation::EventRegistrationToken token)
+{
+	//Note: Count can be off if caller (incorrectly) unregisters same event twice. 
+	hitFailedListenerCount--;
+	internalHitFailedEventHandler -= token;
+}
+
+void AnalyticsManager::HitFailed::raise(Platform::Object^ sender, HitFailedEventArgs^ args)
+{
+	if (fireEventsOnUIThread)
+	{
+		if (  hitFailedListenerCount > 0)
+		{
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, sender, args]()
+			{
+				internalHitFailedEventHandler(sender, args);
+			}));
+		}
+	}
+	else
+		internalHitFailedEventHandler(sender, args);
+}
+
+
+Windows::Foundation::EventRegistrationToken AnalyticsManager::HitSent::add(Windows::Foundation::EventHandler<GoogleAnalytics::HitSentEventArgs^>^ handler)
+{
+		hitSentListenerCount++;
+		return internalHitSentEventHandler += handler;
+}
+
+void AnalyticsManager::HitSent::remove(Windows::Foundation::EventRegistrationToken token)
+{
+	//Note: Count can be off if caller (incorrectly) unregisters same event twice. 
+	hitSentListenerCount--;
+	internalHitSentEventHandler -= token;
+}
+
+void AnalyticsManager::HitSent::raise(Platform::Object^ sender, HitSentEventArgs^ args)
+{
+	if (fireEventsOnUIThread)
+	{
+		if (hitSentListenerCount > 0)
+		{
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, sender, args]()
+			{
+				internalHitSentEventHandler(sender, args);
+			}));
+		}
+	}
+	else
+		internalHitSentEventHandler(sender, args);
+}
+
+
+
+Windows::Foundation::EventRegistrationToken AnalyticsManager::HitMalformed::add(Windows::Foundation::EventHandler<GoogleAnalytics::HitMalformedEventArgs^>^ handler)
+{
+	hitMalformedListenerCount++;
+	return internalHitMalformedEventHandler += handler;
+}
+
+void AnalyticsManager::HitMalformed::remove(Windows::Foundation::EventRegistrationToken token)
+{
+
+	//Note: Count can be off if caller (incorrectly) unregisters same event twice. 
+	hitMalformedListenerCount--;
+	internalHitMalformedEventHandler -= token;
+}
+
+void AnalyticsManager::HitMalformed::raise(Platform::Object^ sender, HitMalformedEventArgs^ args)
+{
+	if (fireEventsOnUIThread)
+	{
+		if (hitMalformedListenerCount > 0)
+		{
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, sender, args]()
+			{
+				internalHitMalformedEventHandler(sender, args);
+			}));
+		}
+	}
+	else
+		internalHitMalformedEventHandler(sender, args);
 }

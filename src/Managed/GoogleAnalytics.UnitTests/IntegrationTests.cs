@@ -138,7 +138,7 @@ namespace GoogleAnalytics.UnitTests
         }
 
         [TestMethod]
-        public async Task SentEventWithDispatcherPeriod()
+        public async Task SendEventWithDispatcherPeriod()
         {
             int delay = 4; 
             TimeSpan ts = TimeSpan.FromSeconds(delay);
@@ -179,6 +179,99 @@ namespace GoogleAnalytics.UnitTests
                 }
             }             
         }
-    
+
+        [TestMethod]
+        public async Task SentMalformedEventWithUIThreadCallback ()
+        {
+            bool fireInUIThread = false;
+
+            /* at most one of these three should be true*/ 
+            bool fireHitSent = true ;
+            bool fireHitMalformed = false ;
+            bool fireHitFailed = false ; 
+
+            int delay = 3;
+            TimeSpan ts = TimeSpan.FromSeconds(delay);  
+            
+                                 
+            var serviceManager = new AnalyticsManager(MockConfig.Current.PlatformInfoProvider);
+            var initializeWindowTask = Windows.ApplicationModel.Core.CoreApplication.MainView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+                 () =>
+                 {
+                     serviceManager.FireEventsOnUIThread = fireInUIThread;
+                 }).AsTask();
+
+            initializeWindowTask.Wait();
+                   
+            serviceManager.DispatchPeriod = ts;
+            serviceManager.IsDebug = true;
+
+            bool isHitSent = false , isMalformed = false , isFailed = false;
+            bool isUIThread = false; 
+
+
+            serviceManager.HitSent += (s , e ) => {
+                isHitSent = true;                
+                isUIThread = IsCallingInUIThread();                
+            };
+
+            serviceManager.HitMalformed += (s, e) =>
+            {
+                isMalformed = true;
+                isUIThread = IsCallingInUIThread();  
+            };
+
+            serviceManager.HitFailed += (s, e) =>
+            {
+                isFailed = true;
+                isUIThread = IsCallingInUIThread(); 
+            };
+
+            var tracker = new Tracker(MockConfig.Current.PropertyId, MockConfig.Current.PlatformInfoProvider, serviceManager);
+            tracker.AppName = MockConfig.Current.AppName;
+            tracker.ClientId = MockConfig.Current.ClientId;
+            tracker.ScreenName = MockConfig.Current.ScreenName;
+
+            
+            HitBuilder hit = null ; 
+            
+            // fireHitSent 
+            hit  = HitBuilder.CreateCustomEvent("category", "action", "label", 2);
+            var data = hit.Build();
+
+            if (fireHitMalformed)
+            {
+               //malform               
+            }
+            else if ( fireHitFailed )
+            {
+                 
+            }
+                          
+            tracker.Send( data );
+              
+             
+            await Task.Delay(TimeSpan.FromSeconds(delay*3));
+
+
+            //Ensure event completed 
+            Assert.IsTrue(fireHitMalformed == isMalformed );
+            Assert.IsTrue(fireHitSent == isHitSent );
+            Assert.IsTrue(fireHitFailed == isFailed );
+
+            //Ensure it was in proper thread 
+            Assert.IsTrue(isUIThread == fireInUIThread );             
+        }
+
+
+        private bool IsCallingInUIThread()
+        {
+            var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
+            if (window != null)
+            {
+                return window.Dispatcher.HasThreadAccess;
+            }
+            return false;
+        }
     }
 }
