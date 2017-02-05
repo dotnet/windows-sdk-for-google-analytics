@@ -403,17 +403,7 @@ void AnalyticsManager::OnHitFailed(Hit^ payload, Exception^ exception)
 
 void AnalyticsManager::OnHitSent(Hit^ payload, HttpResponseMessage^ response)
 {
-	create_task([response]() { return response->Content->ReadAsStringAsync(); }).then([this, payload](task<Platform::String^> t) {				 
-		/*if (FireEventsOnUIThread )
-		{			 
-			dispatcher->RunAsync(
-				Windows::UI::Core::CoreDispatcherPriority::Normal,
-				ref new Windows::UI::Core::DispatchedHandler([this, payload, t]()
-			{
-				HitSent(this, ref new HitSentEventArgs(payload, t.get()));
-			}));			 
-		}
-		else */
+	create_task([response]() { return response->Content->ReadAsStringAsync(); }).then([this, payload](task<Platform::String^> t) {				
 			HitSent(this, ref new HitSentEventArgs(payload, t.get()));
 	});
 }
