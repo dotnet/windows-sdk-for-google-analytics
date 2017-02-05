@@ -12,6 +12,7 @@
 using namespace GoogleAnalytics;
 using namespace Platform;
 using namespace Platform::Collections;
+using namespace Windows::UI::Core;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::System::Threading;
@@ -48,8 +49,11 @@ AnalyticsManager::AnalyticsManager(GoogleAnalytics::IPlatformInfoProvider^ platf
 	timer(nullptr),
 	hitTokenBucket(ref new TokenBucket(60, .5)),
 	reportUncaughtExceptions(false),
-	autoTrackNetworkConnectivity(false), 
-	autoAppLifetimeMonitoring(false) 
+	autoTrackNetworkConnectivity(false),
+	autoAppLifetimeMonitoring(false),
+	fireEventsOnUIThread(false),
+	dispatcher(nullptr),
+	hitSentListenerCount(0), hitMalformedListenerCount(0), hitFailedListenerCount(0)
 {
 	this->platformTrackingInfo = platformInfoProvider;
 	DefaultTracker = nullptr;
@@ -67,7 +71,7 @@ Tracker^ AnalyticsManager::CreateTracker(String^ propertyId)
 		auto tracker = ref new Tracker(propertyId, platformTrackingInfo, this);
 		tracker->AppName = Package::Current->Id->Name;
 		tracker->AppVersion = Package::Current->Id->Version.Major.ToString() + "." + Package::Current->Id->Version.Minor.ToString() + "." + Package::Current->Id->Version.Build.ToString() + "." + Package::Current->Id->Version.Revision.ToString();
-		
+
 		trackers[propertyId] = tracker;
 		if (!DefaultTracker)
 		{
@@ -99,7 +103,7 @@ void AnalyticsManager::DispatchPeriod::set(TimeSpan value)
 {
 	if (dispatchPeriod.Duration != value.Duration)
 	{
-		dispatchPeriod = value;	
+		dispatchPeriod = value;
 		if (timer)
 		{
 			timer->Cancel();
@@ -131,6 +135,34 @@ void AnalyticsManager::IsEnabled::set(bool value)
 	}
 }
 
+bool AnalyticsManager::FireEventsOnUIThread::get()
+{
+	return fireEventsOnUIThread;
+}
+
+void AnalyticsManager::FireEventsOnUIThread::set(bool value)
+{
+	if (fireEventsOnUIThread != value)
+	{
+		if (value)
+		{
+			if (dispatcher == nullptr)
+			{
+				auto window = CoreWindow::GetForCurrentThread();
+				if (window != nullptr)
+				{
+					dispatcher = window->Dispatcher;
+				}
+
+				if (dispatcher == nullptr)
+				{
+					throw ref new WrongThreadException("FireEventsOnUIThread must be called from UI Thread");
+				}
+			}
+		}
+		fireEventsOnUIThread = value;
+	}
+}
 
 bool AnalyticsManager::AutoAppLifetimeMonitoring::get()
 {
@@ -149,10 +181,10 @@ void AnalyticsManager::AutoAppLifetimeMonitoring::set(bool value)
 		}
 		else
 		{
-			CoreApplication::Suspending -= coreAppSuspendingEventToken; 
-			CoreApplication::Resuming -= coreAppResumingEventToken; 	
-			coreAppResumingEventToken.Value = 0; 
-			coreAppSuspendingEventToken.Value = 0; 
+			CoreApplication::Suspending -= coreAppSuspendingEventToken;
+			CoreApplication::Resuming -= coreAppResumingEventToken;
+			coreAppResumingEventToken.Value = 0;
+			coreAppSuspendingEventToken.Value = 0;
 		}
 	}
 }
@@ -225,10 +257,10 @@ IAsyncAction^ AnalyticsManager::SuspendAsync()
 
 task<void> AnalyticsManager::_SuspendAsync()
 {
-	
-	return _DispatchAsync().then([this] {	 
+
+	return _DispatchAsync().then([this] {
 		if (timer)
-		{	
+		{
 			timer->Cancel();
 			timer = nullptr;
 		}
@@ -236,15 +268,15 @@ task<void> AnalyticsManager::_SuspendAsync()
 }
 
 void AnalyticsManager::Resume()
-{  
+{
 	if (dispatchPeriod.Duration > 0)
 	{
 		//This would only happen if Suspend did not complete before due to a long Dispatch; very unlikely (I hope)
-		if (timer != nullptr )
-		{			 
+		if (timer != nullptr)
+		{
 			timer->Cancel();
 			timer = nullptr;
-		}		 
+		}
 		timer = ThreadPoolTimer::CreatePeriodicTimer(ref new TimerElapsedHandler(this, &AnalyticsManager::timer_Tick), dispatchPeriod);
 	}
 }
@@ -284,8 +316,8 @@ task<void> AnalyticsManager::DispatchQueuedHits(std::vector<Hit^> hits)
 			{
 				payloadData[kvp->Key] = kvp->Value;
 			}
-			int milliSeconds = (int)(TimeSpanHelper::GetTotalMilliseconds(TimeSpanHelper::FromTicks(now.UniversalTime - hit->TimeStamp.UniversalTime))); 
-			payloadData["qt"] = milliSeconds.ToString(); 
+			int milliSeconds = (int)(TimeSpanHelper::GetTotalMilliseconds(TimeSpanHelper::FromTicks(now.UniversalTime - hit->TimeStamp.UniversalTime)));
+			payloadData["qt"] = milliSeconds.ToString();
 
 			tasks.push_back(DispatchHitData(hit, httpClient, payloadData));
 		}
@@ -350,7 +382,7 @@ task<HttpResponseMessage^> AnalyticsManager::SendHitAsync(Hit^ payload, HttpClie
 	}
 
 #ifdef _DEBUG 
-// 	::OutputDebugString(content.c_str());
+	// 	::OutputDebugString(content.c_str());
 #endif 
 
 	if (PostData)
@@ -446,18 +478,18 @@ void AnalyticsManager::ReportUncaughtExceptions::set(bool value)
 	}
 }
 
-void AnalyticsManager::CoreApplication_Suspending (Object^ sender, SuspendingEventArgs^ e)
+void AnalyticsManager::CoreApplication_Suspending(Object^ sender, SuspendingEventArgs^ e)
 {
-	auto deferral = e->SuspendingOperation->GetDeferral(); 
-	_SuspendAsync().then( [deferral] ()
-	{ 
-		deferral->Complete(); 
-	}); 
+	auto deferral = e->SuspendingOperation->GetDeferral();
+	_SuspendAsync().then([deferral]()
+	{
+		deferral->Complete();
+	});
 }
 
 void AnalyticsManager::CoreApplication_Resuming(Object^ sender, Object^ unused)
 {
-	 Resume(); 	 
+	Resume();
 }
 
 void AnalyticsManager::CoreApplication_UnhandledErrorDetected(Object^ sender, UnhandledErrorDetectedEventArgs^ e)
@@ -524,4 +556,101 @@ void AnalyticsManager::UpdateConnectionStatus()
 			break;
 		}
 	}
+}
+
+Windows::Foundation::EventRegistrationToken AnalyticsManager::HitFailed::add(Windows::Foundation::EventHandler<GoogleAnalytics::HitFailedEventArgs^>^ handler)
+{
+	hitFailedListenerCount++;
+	return internalHitFailedEventHandler += handler;
+}
+
+void AnalyticsManager::HitFailed::remove(Windows::Foundation::EventRegistrationToken token)
+{
+	//Note: Count can be off if caller (incorrectly) unregisters same event twice. 
+	hitFailedListenerCount--;
+	internalHitFailedEventHandler -= token;
+}
+
+void AnalyticsManager::HitFailed::raise(Platform::Object^ sender, HitFailedEventArgs^ args)
+{
+	if (fireEventsOnUIThread)
+	{
+		if (hitFailedListenerCount > 0)
+		{
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, sender, args]()
+			{
+				internalHitFailedEventHandler(sender, args);
+			}));
+		}
+	}
+	else
+		internalHitFailedEventHandler(sender, args);
+}
+
+
+Windows::Foundation::EventRegistrationToken AnalyticsManager::HitSent::add(Windows::Foundation::EventHandler<GoogleAnalytics::HitSentEventArgs^>^ handler)
+{
+	hitSentListenerCount++;
+	return internalHitSentEventHandler += handler;
+}
+
+void AnalyticsManager::HitSent::remove(Windows::Foundation::EventRegistrationToken token)
+{
+	//Note: Count can be off if caller (incorrectly) unregisters same event twice. 
+	hitSentListenerCount--;
+	internalHitSentEventHandler -= token;
+}
+
+void AnalyticsManager::HitSent::raise(Platform::Object^ sender, HitSentEventArgs^ args)
+{
+	if (fireEventsOnUIThread)
+	{
+		if (hitSentListenerCount > 0)
+		{
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, sender, args]()
+			{
+				internalHitSentEventHandler(sender, args);
+			}));
+		}
+	}
+	else
+		internalHitSentEventHandler(sender, args);
+}
+
+
+
+Windows::Foundation::EventRegistrationToken AnalyticsManager::HitMalformed::add(Windows::Foundation::EventHandler<GoogleAnalytics::HitMalformedEventArgs^>^ handler)
+{
+	hitMalformedListenerCount++;
+	return internalHitMalformedEventHandler += handler;
+}
+
+void AnalyticsManager::HitMalformed::remove(Windows::Foundation::EventRegistrationToken token)
+{
+
+	//Note: Count can be off if caller (incorrectly) unregisters same event twice. 
+	hitMalformedListenerCount--;
+	internalHitMalformedEventHandler -= token;
+}
+
+void AnalyticsManager::HitMalformed::raise(Platform::Object^ sender, HitMalformedEventArgs^ args)
+{
+	if (fireEventsOnUIThread)
+	{
+		if (hitMalformedListenerCount > 0)
+		{
+			dispatcher->RunAsync(
+				Windows::UI::Core::CoreDispatcherPriority::Normal,
+				ref new Windows::UI::Core::DispatchedHandler([this, sender, args]()
+			{
+				internalHitMalformedEventHandler(sender, args);
+			}));
+		}
+	}
+	else
+		internalHitMalformedEventHandler(sender, args);
 }
