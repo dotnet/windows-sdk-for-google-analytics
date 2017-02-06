@@ -8,7 +8,7 @@ The SDK supports tracking for the following interaction types:
 - Actions (aka events)
 - Social 
 - Exceptions
-- E-commerce 
+- Enhanced commerce 
 - User Timing 
 - Custom dimensions & metrics 
  
@@ -20,19 +20,19 @@ The implementation supports:
  
 
 ## Getting Started 
-Please read our [Getting Started ](./GettingStarted.md") page for detailed information on pre-requisites, samples, and getting the nuget packages for the SDK.  
+Please read our [Getting Started ](https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/Getting-Started) page for detailed information on pre-requisites, samples, and getting the nuget packages for the SDK.  
 
  
 ##Release notes/Update history:
-**v1.5.0.0. Feb 2017** 
-This is our initial release.  Please see supported features above for list of events supported.  
+**v1.5.0.0. Feb 2017**. This is our initial release, though our SDK is an iteration on this prior project on [codeplex](http://googleanalyticssdk.codeplex.com/). 
+- Please see supported features above.  
 - Converged the APIs so that the C# and WinRT SDKs would be seamless. In the convergence, we deprecated a few features from old SDK (in codeplex), so look at our FAQ, for porting your code from older SDK to this one. 
 - We tweaked the APIs so they mapped closer to the Google Analytics Android SDK. This way folks familiar with the API on other platform could more easily reuse their knowledge with our SDK. 
  
-
-
-##Useful links
-- [FAQ and future roadmap page](faq.md)
+##Useful links 
+- [SDK Documentation] (https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/Documentation)
+- [Future roadmap page](https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/Roadmap)
+- [FAQs](https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/FAQ) 
 - [Learn about Google Analytics](https://developers.google.com/analytics/)
 
 ##About this SDK
