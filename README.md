@@ -39,7 +39,7 @@ Please read our [Getting Started ](https://github.com/dotnet/windows-sdk-for-goo
 This SDK is intended to have feature parity as well as API similarity (adjusted for .NET and WinRT conventions) with the official Google Analytics SDK for Android.  
 
 ###Feedback and Requests 
-Please use [Github issues](./issues) for comments, feature requests, or to vote on features that others users are requesting.  
+Please submit [issues](https://github.com/dotnet/windows-sdk-for-google-analytics/issues) for comments, feature requests, or to vote on features that others users are requesting.  
 
 ###Contributing 
 We accept contributions to code, samples, and docs. Please submit pull requests.
