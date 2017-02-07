@@ -12,8 +12,8 @@ using Windows.UI.Xaml;
 namespace GoogleAnalytics
 {
     /// <summary>
-	/// Windows 10, Universal Platform implementation of GoogleAnalytics.Core.IPlatformInfoProvider. 
-	/// </summary>
+    /// Windows 10, Universal Platform implementation of GoogleAnalytics.Core.IPlatformInfoProvider.
+    /// </summary>
     public sealed class PlatformInfoProvider : IPlatformInfoProvider
     {
         const string Key_AnonymousClientId = "GoogleAnaltyics.AnonymousClientId";
