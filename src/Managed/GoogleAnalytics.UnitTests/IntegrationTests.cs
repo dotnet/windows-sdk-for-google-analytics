@@ -182,7 +182,8 @@ namespace GoogleAnalytics.UnitTests
 
         [TestMethod]
         public async Task SentMalformedEventWithUIThreadCallback ()
-        {
+        {        
+#if NATIVESDK_TEST
             bool fireInUIThread = false;
 
             /* at most one of these three should be true*/ 
@@ -249,10 +250,8 @@ namespace GoogleAnalytics.UnitTests
             }
                           
             tracker.Send( data );
-              
-             
+                           
             await Task.Delay(TimeSpan.FromSeconds(delay*3));
-
 
             //Ensure event completed 
             Assert.IsTrue(fireHitMalformed == isMalformed );
@@ -260,7 +259,8 @@ namespace GoogleAnalytics.UnitTests
             Assert.IsTrue(fireHitFailed == isFailed );
 
             //Ensure it was in proper thread 
-            Assert.IsTrue(isUIThread == fireInUIThread );             
+            Assert.IsTrue(isUIThread == fireInUIThread );
+#endif          
         }
 
 

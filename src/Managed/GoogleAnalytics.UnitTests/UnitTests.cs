@@ -20,13 +20,21 @@ namespace GoogleAnalytics.UnitTests
         }
 
         [TestMethod]
-        public void GenerateEventHitWithoutOptionalInfo()
+        public void GenerateEventHitWithOptionalInfo()
         {
-            var hit = HitBuilder.CreateCustomEvent("category", "action", "", 0);
+#if !NATIVESDK_TEST
+            var hit = HitBuilder.CreateCustomEvent("category", "action" ); 
+#else
+            var hit = HitBuilder.CreateCustomEvent("category", "action", "", 0 );
+#endif
             var data = hit.Build();
-            Assert.IsFalse(data.ContainsKey(ParameterNames.EventLabel));
-            Assert.IsFalse(data.ContainsKey(ParameterNames.EventValue));
+            Assert.IsFalse (data.ContainsKey(ParameterNames.EventLabel));             
+            Assert.IsFalse (data.ContainsKey(ParameterNames.EventValue));
+
         }
+
+
+
 
         [TestMethod]
         public void GenerateHitWithOverrides()
@@ -151,17 +159,36 @@ namespace GoogleAnalytics.UnitTests
 
             mockServiceManager.EnumerateDataEnqueed();
             Assert.IsTrue(mockServiceManager.LastDataEnqueued[ParameterNames.PropertyId] == propertyId);
-            Assert.IsNotNull(mockServiceManager.LastDataEnqueued[ParameterNames.UserLanguage]);
-            Assert.IsTrue(mockServiceManager.LastDataEnqueued[ParameterNames.UserLanguage] == platformInfoProvider.UserLanguage);
+
+            if (platformInfoProvider.UserLanguage != null)
+            {
+                Assert.IsNotNull(mockServiceManager.LastDataEnqueued[ParameterNames.UserLanguage]);
+                Assert.IsTrue(mockServiceManager.LastDataEnqueued[ParameterNames.UserLanguage] == platformInfoProvider.UserLanguage);
+            }
+            else
+                Assert.IsFalse(mockServiceManager.LastDataEnqueued.ContainsKey(ParameterNames.UserLanguage)); 
+
             if (platformInfoProvider.ScreenColors != null)
                 Assert.IsTrue(mockServiceManager.LastDataEnqueued[ParameterNames.ScreenColors] == platformInfoProvider.ScreenColors.Value.ToString());
+            else
+                Assert.IsFalse(mockServiceManager.LastDataEnqueued.ContainsKey(ParameterNames.ScreenColors));
+
             if (platformInfoProvider.ViewPortResolution != null)
+            {
                 Assert.IsNotNull(mockServiceManager.LastDataEnqueued[ParameterNames.ViewportSize]);
+            } 
+            else
+                Assert.IsFalse(mockServiceManager.LastDataEnqueued.ContainsKey(ParameterNames.ViewportSize));
+
+
             if (platformInfoProvider.AnonymousClientId != null)
             {
                 Assert.IsNotNull(mockServiceManager.LastDataEnqueued[ParameterNames.ClientId]);
                 Assert.IsTrue(mockServiceManager.LastDataEnqueued[ParameterNames.ClientId] == platformInfoProvider.AnonymousClientId);
-            }
+            }             
+            // Here do not validate that ClientId is missing because it can also come from tracker.ClientId 
+             
+
         }
         #endregion 
 
