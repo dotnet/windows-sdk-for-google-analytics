@@ -19,15 +19,16 @@ namespace GoogleAnalytics
             :base(propertyId, serviceManager)
         {
             this.platformInfoProvider = platformInfoProvider;
-            
-            ClientId = platformInfoProvider.AnonymousClientId;
-            ScreenColors = platformInfoProvider.ScreenColors;
-            ScreenResolution = platformInfoProvider.ScreenResolution;
-            Language = platformInfoProvider.UserLanguage;
-            ViewportSize = platformInfoProvider.ViewPortResolution;
-
-            platformInfoProvider.ViewPortResolutionChanged += platformTrackingInfo_ViewPortResolutionChanged;
-            platformInfoProvider.ScreenResolutionChanged += platformTrackingInfo_ScreenResolutionChanged;
+            if (platformInfoProvider != null)
+            {
+                ClientId = platformInfoProvider.AnonymousClientId;
+                ScreenColors = platformInfoProvider.ScreenColors;
+                ScreenResolution = platformInfoProvider.ScreenResolution;
+                Language = platformInfoProvider.UserLanguage;
+                ViewportSize = platformInfoProvider.ViewPortResolution;
+                platformInfoProvider.ViewPortResolutionChanged += platformTrackingInfo_ViewPortResolutionChanged;
+                platformInfoProvider.ScreenResolutionChanged += platformTrackingInfo_ScreenResolutionChanged;
+            } 
         }
         
         void platformTrackingInfo_ViewPortResolutionChanged(object sender, EventArgs args)
