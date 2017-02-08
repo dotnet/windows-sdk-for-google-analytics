@@ -5,18 +5,18 @@ The SDK uses Google's [measurement protocol](https://developers.google.com/analy
 The SDK supports tracking for the following interaction types:
 
 - Screen/Page Views 
-- Actions (aka events)
-- Social 
+- Actions (aka Events)
+- Social Interactions 
 - Exceptions
 - Enhanced commerce 
-- User Timing 
-- Custom dimensions & metrics 
+- User Timings 
+- Custom Dimensions & Metrics 
  
 The implementation supports:
 
 - Session Management 
-- Cache busting  
-- Dispatching ( periodic and manual)  
+- Cache Busting  
+- Dispatching (periodic and manual)  
  
 
 ## Getting Started 
@@ -39,7 +39,7 @@ Please read our [Getting Started ](https://github.com/dotnet/windows-sdk-for-goo
 This SDK is intended to have feature parity as well as API similarity (adjusted for .NET and WinRT conventions) with the official Google Analytics SDK for Android.  
 
 ###Feedback and Requests 
-Please submit [issues](https://github.com/dotnet/windows-sdk-for-google-analytics/issues) for comments, feature requests, or to vote on features that others users are requesting.  
+Please use the [issues](https://github.com/dotnet/windows-sdk-for-google-analytics/issues) page to submit any bugs, comments or questions, and feature requests.  
 
 ###Contributing 
 We accept contributions to code, samples, and docs. Please submit pull requests.
