@@ -408,7 +408,7 @@ namespace GoogleAnalytics
 
 
 		/// <summary>		
-		/// When set to true, <see cref="AnalyticsManager::HitSent" />, <see cref="AnalyticsManager::HitMalformed" />, and <see cref="AnalyticsManager::Failed"/> will fire back into UI thread.          
+		/// When set to true, <see cref="AnalyticsManager::HitSent" />, <see cref="AnalyticsManager::HitMalformed" />, and <see cref="AnalyticsManager::HitFailed"/> will fire back into UI thread.          
 		/// </summary>
 		/// <remarks>
 		/// You must set this property to true to listen to these events from a Javascript app.
