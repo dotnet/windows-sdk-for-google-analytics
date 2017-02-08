@@ -1,22 +1,23 @@
 #Windows SDK for Google Analytics&trade;
-The Windows SDK for Google Analytics makes it easy to connect your Universal Windows Apps to Google Analytics.  
-The SDK uses Google's [measurement protocol](https://developers.google.com/analytics/devguides/collection/protocol/) to send HTTP requests with user interaction data to Google's [Universal Analytics](https://support.google.com/analytics/answer/2790010) Services. 
+The Windows SDK for Google Analytics makes it easy to connect your Universal Windows Apps to Google Analytics Mobile App accounts.  
 
-The SDK supports tracking for the following interaction types:
+The SDK uses Google's [measurement protocol](https://developers.google.com/analytics/devguides/collection/protocol/) to send HTTP requests with user interaction data to Google's [Universal Analytics](https://support.google.com/analytics/answer/2790010) Services. The SDK also supports the [debug](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits) endpoint which will allows developers to test and validate their hits.
 
-- Screen/Page Views 
-- Actions (aka Events)
-- Social Interactions 
-- Exceptions
-- Enhanced commerce 
-- User Timings 
-- Custom Dimensions & Metrics 
+The SDK supports tracking for the following interaction ([Hit](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#t)) types:
+
+- Screen Views 
+- Actions (aka [Events](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#events))
+- [Social Interactions](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#social) 
+- [Exceptions](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#exception)
+- [Enhanced commerce](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#enhanced-ecomm) 
+- [User Timings](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#timing) 
+- [Custom Dimensions & Metrics](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#customs) 
  
 The implementation supports:
 
-- Session Management 
-- Cache Busting  
-- Dispatching (periodic and manual)  
+- [Session Management](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#sc) 
+- [Cache Busting](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#z)  
+- [Dispatching (periodic and manual)](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#qt)  
  
 
 ## Getting Started 
