@@ -65,10 +65,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 		tracker = AnalyticsManager::Current->CreateTracker("UA-39959863-1");
 		AnalyticsManager::Current->IsDebug = true;
 		AnalyticsManager::Current->ReportUncaughtExceptions = true;
-
-		Windows::Foundation::TimeSpan dispatchPeriod; 
-		dispatchPeriod.Duration = 30 /*seconds*/ * 10000000 ; /* in nanoseconds*/
-		AnalyticsManager::Current->DispatchPeriod = dispatchPeriod; 
+		 
 		AnalyticsManager::Current->AutoAppLifetimeMonitoring = true; 
 
 	}

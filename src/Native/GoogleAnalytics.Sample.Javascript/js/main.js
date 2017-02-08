@@ -45,9 +45,7 @@ function onHitSent ( args )
 }
 function initTracker() {
 
-    tracker = GoogleAnalytics.AnalyticsManager.current.createTracker("UA-39959863-1");
-    //TODO: Marshalling issue when using dispatching. Use immediate mode for now
-    // GoogleAnalytics.AnalyticsManager.current.dispatchPeriod = 10000 ; // 10 seconds
+    tracker = GoogleAnalytics.AnalyticsManager.current.createTracker("UA-39959863-1");     
     GoogleAnalytics.AnalyticsManager.current.isDebug = true;
     GoogleAnalytics.AnalyticsManager.current.reportUncaughtExceptions = true;
     GoogleAnalytics.AnalyticsManager.current.autoAppLifetimeMonitoring = true;

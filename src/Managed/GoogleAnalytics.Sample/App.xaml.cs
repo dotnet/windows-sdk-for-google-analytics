@@ -69,8 +69,7 @@ namespace GoogleAnalytics.Sample
                 {
               
                     Tracker = AnalyticsManager.Current.CreateTracker("UA-39959863-1");
-                    AnalyticsManager.Current.IsDebug = true;
-                    AnalyticsManager.Current.DispatchPeriod = TimeSpan.FromSeconds(10); 
+                    AnalyticsManager.Current.IsDebug = true;                    
                     AnalyticsManager.Current.ReportUncaughtExceptions = true;
                     AnalyticsManager.Current.AutoAppLifetimeMonitoring = true;
 
