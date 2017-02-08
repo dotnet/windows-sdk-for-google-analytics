@@ -53,9 +53,9 @@ namespace GoogleAnalytics
         }
 
         /// <summary>
-		/// True when the user has opted out of analytics, this disables all tracking activities. 
-		/// </summary>				
-		/// <remarks>See Google Analytics usage guidelines for more information.</remarks>
+        /// True when the user has opted out of analytics, this disables all tracking activities.
+        /// </summary>
+        /// <remarks>See Google Analytics usage guidelines for more information.</remarks>
         public override bool AppOptOut
         {
             get
@@ -73,8 +73,8 @@ namespace GoogleAnalytics
         }
 
         /// <summary>
-		/// Enables (when set to true) automatic catching and tracking of Unhandled Exceptions.
-		/// </summary>
+        /// Enables (when set to true) automatic catching and tracking of Unhandled Exceptions.
+        /// </summary>
         public bool ReportUncaughtExceptions
         {
             get
@@ -131,8 +131,8 @@ namespace GoogleAnalytics
         }
 
         /// <summary>
-		/// Enables (when set to true) listening to network connectivity events to have trackers behave accordingly to their connectivity status.  
-		/// </summary>
+        /// Enables (when set to true) listening to network connectivity events to have trackers behave accordingly to their connectivity status.
+        /// </summary>
         public bool AutoTrackNetworkConnectivity
         {
             get
