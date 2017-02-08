@@ -15,6 +15,7 @@
         </Style>
     </Page.Resources>
 
+    <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="20" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -51,4 +52,6 @@
         </StackPanel>
 
     </Grid>
+
+    </ScrollViewer>
 </Page>
