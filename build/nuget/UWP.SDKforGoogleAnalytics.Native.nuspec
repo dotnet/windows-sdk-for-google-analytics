@@ -20,9 +20,13 @@
 
   <files>
 
-    <file target="build\uap\UWP.SDKforGoogleAnalytics.Native.targets"
+    <!-- This file is required for C++ projects -->
+    <file target="build\native\UWP.SDKforGoogleAnalytics.Native.targets"
             src="..\..\build\nuget\UWP.SDKforGoogleAnalytics.Native.targets" />
-
+    
+    <!-- This file is required for JavaScript projects -->
+    <file target="build\uap\UWP.SDKforGoogleAnalytics.Native.targets"
+           src="..\..\build\nuget\UWP.SDKforGoogleAnalytics.Native.targets" />
 
     <file target="lib\uap10.0\GoogleAnalytics.winmd"	src="release\GoogleAnalytics\GoogleAnalytics.winmd" />
     <file target="lib\uap10.0\GoogleAnalytics.xml"      src="GoogleAnalytics.UWP\GoogleAnalytics.UWP.Native.xml" />
