@@ -78,7 +78,7 @@ namespace GoogleAnalytics
 
             var data = new Dictionary<string, string>();
             data.Add("t", HitType_Exception);
-            if (description != null) data.Add("exd", description);
+            data.Add("exd", description);
             if (!isFatal) data.Add("exf", "0");
             return new HitBuilder(data);
         }
