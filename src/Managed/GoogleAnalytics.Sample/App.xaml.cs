@@ -69,9 +69,13 @@ namespace GoogleAnalytics.Sample
                 {
               
                     Tracker = AnalyticsManager.Current.CreateTracker("UA-39959863-1");
-                    AnalyticsManager.Current.IsDebug = true;                    
                     AnalyticsManager.Current.ReportUncaughtExceptions = true;
                     AnalyticsManager.Current.AutoAppLifetimeMonitoring = true;
+                    
+                    // When set to true, the debug api of GA is hit
+                    // Note: Debug api of GA does not log to the GA console.
+                    // Set it to false to log the activity.
+                    AnalyticsManager.Current.IsDebug = true;
 
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
