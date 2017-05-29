@@ -31,7 +31,7 @@ Please read our [Getting Started ](https://github.com/dotnet/windows-sdk-for-goo
 - We tweaked the APIs so they mapped closer to the Google Analytics Android SDK. This way folks familiar with the API on other platform could more easily reuse their knowledge with our SDK. 
  
 ## Useful links 
-- [SDK Documentation] (https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/Documentation)
+- [SDK Documentation](https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/Documentation)
 - [Future roadmap page](https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/Roadmap)
 - [FAQs](https://github.com/dotnet/windows-sdk-for-google-analytics/wiki/FAQ) 
 - [Learn about Google Analytics](https://developers.google.com/analytics/)
