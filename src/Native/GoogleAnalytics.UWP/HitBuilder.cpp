@@ -150,7 +150,7 @@ HitBuilder^ HitBuilder::SetCustomDimension(int index, Platform::String^ dimensio
 HitBuilder^ HitBuilder::SetCustomMetric(int index, long long metric)
 {
 	auto data = ref new Map<String^, String^>();
-	data->Insert("cd" + index, metric.ToString());
+	data->Insert("cm" + index, metric.ToString());
 	return ref new HitBuilder(lineage, data);
 }
 
