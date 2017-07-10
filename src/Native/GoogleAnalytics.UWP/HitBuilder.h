@@ -135,7 +135,7 @@ namespace GoogleAnalytics
 		/// <param name="index">The index/slot in which the metric will be set.</param>
 		/// <param name="metric">The value of the metric for the given index.</param>
 		/// <returns>The builder object that you can use to chain calls.</returns>
-		HitBuilder^ SetCustomMetric(int index, long long metric);
+		HitBuilder^ SetCustomMetric(int index, float metric);
 		
 		/// <summary>
 		/// Starts a new session for the hit.

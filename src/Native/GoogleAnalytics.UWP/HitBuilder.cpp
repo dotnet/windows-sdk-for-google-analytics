@@ -147,7 +147,7 @@ HitBuilder^ HitBuilder::SetCustomDimension(int index, Platform::String^ dimensio
 	return ref new HitBuilder(lineage, data);
 }
 
-HitBuilder^ HitBuilder::SetCustomMetric(int index, long long metric)
+HitBuilder^ HitBuilder::SetCustomMetric(int index, float metric)
 {
 	auto data = ref new Map<String^, String^>();
 	data->Insert("cm" + index, metric.ToString());
