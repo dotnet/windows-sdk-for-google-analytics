@@ -151,7 +151,7 @@ namespace GoogleAnalytics.UnitTests
 
         //Custom dimensions & metrics 
         public const string Dimension = "cd{dimensionIndex}";
-        public const string Metric    = "cd{metricIndex}";
+        public const string Metric    = "cm{metricIndex}";
 
         //Content experiments 
         public const string ExperimentId = "xid";
