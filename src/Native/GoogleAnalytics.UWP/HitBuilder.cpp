@@ -179,7 +179,7 @@ HitBuilder^ HitBuilder::AddProduct(Product^ product)
 	if (product->Category) data->Insert("pr" + index + "ca", product->Category);
 	if (product->Variant) data->Insert("pr" + index + "va", product->Variant);
 	if (product->Price) data->Insert("pr" + index + "pr", product->Price->Value.ToString());
-	if (product->Quantity) data->Insert("pr" + index + "at", product->Quantity->Value.ToString());
+	if (product->Quantity) data->Insert("pr" + index + "qt", product->Quantity->Value.ToString());
 	if (product->CouponCode) data->Insert("pr" + index + "cc", product->CouponCode);
 	if (product->Position) data->Insert("pr" + index + "ps", product->Position->Value.ToString());
 
