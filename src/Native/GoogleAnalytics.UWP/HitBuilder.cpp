@@ -307,7 +307,7 @@ HitBuilder^ HitBuilder::SetProductAction(ProductAction^ action)
 HitBuilder^ HitBuilder::SetPromotionAction(PromotionAction action)
 {
 	auto data = ref new Map<String^, String^>();
-	data->Insert("pa", Promotion::GetAction(action));
+	data->Insert("promoa", Promotion::GetAction(action));
 	return ref new HitBuilder(lineage, data);
 }
 
