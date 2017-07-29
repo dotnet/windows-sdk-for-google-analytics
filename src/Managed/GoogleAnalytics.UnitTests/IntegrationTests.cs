@@ -70,6 +70,15 @@ namespace GoogleAnalytics.UnitTests
             await SendHitAsync(hit);
         }
 
+        [TestMethod]
+        public async Task SendCommerceImpressionPageView()
+        {
+            var product = MockConfig.MakeProduct();
+            var hit = HitBuilder.CreateScreenView();
+            hit.AddImpression(product, "Impression List");
+            await SendHitAsync(hit);
+        }
+
 
         [TestMethod]
         public async Task SendSocialInteraction()
