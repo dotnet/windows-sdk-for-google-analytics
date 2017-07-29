@@ -187,7 +187,7 @@ HitBuilder^ HitBuilder::AddProduct(Product^ product)
 	{
 		data->Insert("pr" + index + "cd" + kvp->Key, kvp->Value);
 	}
-	for each (auto kvp in product->customMetrics)
+	for each (auto kvp in product->CustomMetrics)
 	{
 		data->Insert("pr" + index + "cm" + kvp->Key, "" + kvp->Value);
 	}
