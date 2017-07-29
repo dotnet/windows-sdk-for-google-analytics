@@ -33,6 +33,8 @@ HitBuilder::HitBuilder()
 
 	data = ref new Map<String^, String^>();
 
+	impressions = ref new Map<String^, int>();
+
 	Product^ p; 
 }
 
@@ -46,6 +48,8 @@ HitBuilder::HitBuilder(IMap<String^, String^>^ data)
 	{
 		this->data->Insert(kvp->Key, kvp->Value);
 	}
+	
+	impressions = ref new Map<String^, int>();
 }
 
 HitBuilder::HitBuilder(IVector<HitBuilder^>^ lineage, IMap<String^, String^>^ data)
@@ -61,6 +65,30 @@ HitBuilder::HitBuilder(IVector<HitBuilder^>^ lineage, IMap<String^, String^>^ da
 	for each (auto kvp in data)
 	{
 		this->data->Insert(kvp->Key, kvp->Value);
+	}
+	
+	impressions = ref new Map<String^, int>();
+}
+
+HitBuilder::HitBuilder(IVector<HitBuilder^>^ lineage, IMap<String^, String^>^ data, IMap<String^, int>^ impressions)
+{
+	this->lineage = ref new Vector<HitBuilder^>();
+	for each (auto hitBuilder in lineage)
+	{
+		this->lineage->Append(hitBuilder);
+	}
+	this->lineage->Append(this);
+
+	this->data = ref new Map<String^, String^>();
+	for each (auto kvp in data)
+	{
+		this->data->Insert(kvp->Key, kvp->Value);
+	}
+	
+	this->impressions = ref new Map<String^, int>();
+	for each (auto kvp in impressions)
+	{
+		this->impressions->Insert(kvp->Key, kvp->Value);
 	}
 }
 
@@ -166,6 +194,53 @@ HitBuilder^ HitBuilder::SetNonInteraction()
 	auto data = ref new Map<String^, String^>();
 	data->Insert("ni", "1");
 	return ref new HitBuilder(lineage, data);
+}
+
+HitBuilder^ HitBuilder::AddImpression(Product^ product, Platform::String^ impressionList)
+{
+	int idxImpression(1);
+	int idxProduct(1);
+
+	auto impressions = ref new Map<String^, int>();
+	int i(0);
+	for each (auto kvp in this->impressions)
+	{
+		i++;
+		if (kvp->Key == impressionList) {
+			idxImpression = i;
+			idxProduct = kvp->Value + 1;
+			impressions->Insert(kvp->Key, idxProduct);
+		}
+		else {
+			impressions->Insert(kvp->Key, kvp->Value);
+		}
+	}
+	if (!impressions->HasKey(impressionList)) {
+		impressions->Insert(impressionList, 1);
+		idxImpression = impressions->Size;
+	}
+
+	auto data = ref new Map<String^, String^>();
+	if (!impressionList->IsEmpty()) data->Insert("il" + idxImpression + "nm", impressionList);
+	if (product->Id) data->Insert("il" + idxImpression + "pi" + idxProduct + "id", product->Id);
+	if (product->Name) data->Insert("il" + idxImpression + "pi" + idxProduct + "nm", product->Name);
+	if (product->Brand) data->Insert("il" + idxImpression + "pi" + idxProduct + "br", product->Brand);
+	if (product->Category) data->Insert("il" + idxImpression + "pi" + idxProduct + "ca", product->Category);
+	if (product->Variant) data->Insert("il" + idxImpression + "pi" + idxProduct + "va", product->Variant);
+	if (product->Price) data->Insert("il" + idxImpression + "pi" + idxProduct + "pr", product->Price->Value.ToString());
+	if (product->Position) data->Insert("il" + idxImpression + "pi" + idxProduct + "ps", product->Position->Value.ToString());
+
+	for each (auto kvp in product->CustomDimensions)
+	{
+		data->Insert("il" + idxImpression + "pi" + idxProduct + "cd" + kvp->Key, kvp->Value);
+	}
+	for each (auto kvp in product->CustomMetrics)
+	{
+		data->Insert("il" + idxImpression + "pi" + idxProduct + "cm" + kvp->Key, "" + kvp->Value);
+	}
+	
+	auto result = ref new HitBuilder(lineage, data, impressions);
+	return result;
 }
 
 HitBuilder^ HitBuilder::AddProduct(Product^ product)

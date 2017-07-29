@@ -37,12 +37,16 @@ namespace GoogleAnalytics
 		Windows::Foundation::Collections::IVector<HitBuilder^>^ lineage;
 
 		Windows::Foundation::Collections::IMap<Platform::String^, Platform::String^>^ data;
+		
+		Windows::Foundation::Collections::IMap<Platform::String^, int>^ impressions;
 
 		HitBuilder();
 
 		HitBuilder(Windows::Foundation::Collections::IMap<Platform::String^, Platform::String^>^ data);
 
 		HitBuilder(Windows::Foundation::Collections::IVector<HitBuilder^>^ lineage, Windows::Foundation::Collections::IMap<Platform::String^, Platform::String^>^ data);
+
+		HitBuilder(Windows::Foundation::Collections::IVector<HitBuilder^>^ lineage, Windows::Foundation::Collections::IMap<Platform::String^, Platform::String^>^ data, Windows::Foundation::Collections::IMap<Platform::String^, int>^ impressions);
 		
 	public:
 
@@ -162,6 +166,14 @@ namespace GoogleAnalytics
 		/// <param name="promotion">The promotion related to the hit.</param>
 		/// <returns>The builder object that you can use to chain calls.</returns>
 		HitBuilder^ AddPromotion(Ecommerce::Promotion^ promotion);
+
+		/// <summary>
+		/// Adds product information as impression to be sent with a given hit, optionally associated with named impression list.
+		/// </summary>
+		/// <param name="product">The product you wish to add as an impression.</param>
+		/// <param name="impressionList">The associated named impression list</param>
+		/// <returns>The builder object that you can use to chain calls.</returns>
+		HitBuilder^ AddImpression(Ecommerce::Product^ product, Platform::String^ impressionList);
 
 		/// <summary>
 		/// Sets a product action for all the products included in this hit. The action and its associated properties affect how the products added through <see cref="AddProduct(Ecommerce.Product)"/> are processed. 
