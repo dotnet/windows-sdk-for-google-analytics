@@ -48,7 +48,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).props" />
   <PropertyGroup>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>$(VersionNumberMajor).$(VersionNumberMinor)</MinimumVisualStudioVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -73,19 +73,19 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GoogleAnalytics">
-      <HintPath>packages\UWP.SDKforGoogleAnalytics.Native.1.5.1\lib\uap10.0\GoogleAnalytics.winmd</HintPath>
+      <HintPath>packages\UWP.SDKforGoogleAnalytics.Native.1.5.2\lib\uap10.0\GoogleAnalytics.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>
       <CopyLocal>True</CopyLocal>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
-  <Import Project="packages\UWP.SDKforGoogleAnalytics.Native.1.5.1\build\uap\UWP.SDKforGoogleAnalytics.Native.targets" Condition="Exists('packages\UWP.SDKforGoogleAnalytics.Native.1.5.1\build\uap\UWP.SDKforGoogleAnalytics.Native.targets')" />
+  <Import Project="packages\UWP.SDKforGoogleAnalytics.Native.1.5.2\build\uap\UWP.SDKforGoogleAnalytics.Native.targets" Condition="Exists('packages\UWP.SDKforGoogleAnalytics.Native.1.5.2\build\uap\UWP.SDKforGoogleAnalytics.Native.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\UWP.SDKforGoogleAnalytics.Native.1.5.1\build\uap\UWP.SDKforGoogleAnalytics.Native.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\UWP.SDKforGoogleAnalytics.Native.1.5.1\build\uap\UWP.SDKforGoogleAnalytics.Native.targets'))" />
+    <Error Condition="!Exists('packages\UWP.SDKforGoogleAnalytics.Native.1.5.2\build\uap\UWP.SDKforGoogleAnalytics.Native.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\UWP.SDKforGoogleAnalytics.Native.1.5.2\build\uap\UWP.SDKforGoogleAnalytics.Native.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below then uncomment
        that target and the DisableFastUpToDateCheck PropertyGroup. 
