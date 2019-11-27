@@ -1,6 +1,6 @@
 # Windows SDK for Google Analytics&trade;
 
-This repo is archived. A .NET Standard-based versions is maintained by [@LindaLawton](https://github.com/LindaLawton) [here](https://github.com/LindaLawton/google-analytics-dotnet-sdk).
+This repo is archived. A .NET Standard-based version is maintained by [@LindaLawton](https://github.com/LindaLawton) [here](https://github.com/LindaLawton/google-analytics-dotnet-sdk).
 
 The Windows SDK for Google Analytics makes it easy to connect your Universal Windows Apps to Google Analytics Mobile App accounts.  
 
