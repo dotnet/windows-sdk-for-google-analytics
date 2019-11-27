@@ -1,4 +1,7 @@
 # Windows SDK for Google Analytics&trade;
+
+This repo is archived. A .NET Standard-based versions is maintained by [@LindaLawton](https://github.com/LindaLawton) [here](https://github.com/LindaLawton/google-analytics-dotnet-sdk).
+
 The Windows SDK for Google Analytics makes it easy to connect your Universal Windows Apps to Google Analytics Mobile App accounts.  
 
 The SDK uses Google's [measurement protocol](https://developers.google.com/analytics/devguides/collection/protocol/) to send HTTP requests with user interaction data to Google's [Universal Analytics](https://support.google.com/analytics/answer/2790010) Services. The SDK also supports the [debug](https://developers.google.com/analytics/devguides/collection/protocol/v1/validating-hits) endpoint which will allows developers to test and validate their hits.
