@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace GoogleAnalytics
 {
@@ -17,6 +18,7 @@ namespace GoogleAnalytics
 
         readonly IList<HitBuilder> lineage;
         readonly IDictionary<string, string> data;
+        readonly IDictionary<string, int> impressions;
 
         private IDictionary<string, string> Data { get { return data; } }
         private int ProductCount { get; set; }
@@ -28,6 +30,7 @@ namespace GoogleAnalytics
             lineage.Add(this);
 
             data = new Dictionary<string, string>();
+            impressions = new Dictionary<string, int>();
         }
 
         private HitBuilder(IDictionary<string, string> data)
@@ -36,6 +39,7 @@ namespace GoogleAnalytics
             this.lineage.Add(this);
 
             this.data = new Dictionary<string, string>(data);
+            impressions = new Dictionary<string, int>();
         }
 
         private HitBuilder(IList<HitBuilder> lineage, IDictionary<string, string> data)
@@ -44,8 +48,18 @@ namespace GoogleAnalytics
             this.lineage.Add(this);
 
             this.data = new Dictionary<string, string>(data);
+            impressions = new Dictionary<string, int>();
         }
-        
+
+        private HitBuilder(IList<HitBuilder> lineage, IDictionary<string, string> data, IDictionary<string, int> impressions)
+        {
+            this.lineage = new List<HitBuilder>(lineage);
+            this.lineage.Add(this);
+
+            this.data = new Dictionary<string, string>(data);
+            this.impressions = new Dictionary<string, int>(impressions);
+        }
+
         /// <summary>
         /// Creates an event hit to track events.
         /// </summary>
@@ -135,7 +149,6 @@ namespace GoogleAnalytics
 
 
         // TODO: setCampaignParamsFromUrl(String utmParams) 
-        // TODO: AddImpression(Ecommerce.Product product, string impressions)
 
         /// <summary>
         /// Looks up a value by name from the current instance.
@@ -236,6 +249,50 @@ namespace GoogleAnalytics
                 data.Add($"pr{index}cm{item.Key}", item.Value.ToString(CultureInfo.InvariantCulture));
             }
             return new HitBuilder(lineage, data) { ProductCount = index };
+        }
+
+        /// <summary>
+        /// Adds product information as impression to be sent with a given hit, optionally associated with named impression list.
+        /// </summary>
+		/// <param name="product">The product you wish to add as an impression.</param>
+		/// <param name="impressionList">The associated named impression list</param>
+        /// <returns>The builder object that you can use to chain calls.</returns>
+        public HitBuilder AddImpression(Ecommerce.Product product, string impressionList)
+        {
+            var idxImpression = 1;
+            var idxProduct = 1;
+            if (String.IsNullOrEmpty(impressionList))
+            {
+                impressionList = String.Empty;
+            }
+            var impressions = new Dictionary<string, int>(this.impressions);
+            if (!impressions.ContainsKey(impressionList)) {
+                impressions.Add(impressionList, 1);
+                idxImpression = impressions.Count;
+            } else
+            {
+                idxImpression = impressions.Keys.ToList().IndexOf(impressionList) + 1;
+                idxProduct = impressions[impressionList]++;
+            }
+
+            var data = new Dictionary<string, string>();
+            if (!String.IsNullOrEmpty(impressionList)) data.Add($"il{idxImpression}nm", impressionList);
+            if (product.Id != null) data.Add($"il{idxImpression}pi{idxProduct}id", product.Id);
+            if (product.Name != null) data.Add($"il{idxImpression}pi{idxProduct}nm", product.Name);
+            if (product.Brand != null) data.Add($"il{idxImpression}pi{idxProduct}br", product.Brand);
+            if (product.Category != null) data.Add($"il{idxImpression}pi{idxProduct}ca", product.Category);
+            if (product.Variant != null) data.Add($"il{idxImpression}pi{idxProduct}va", product.Variant);
+            if (product.Price.HasValue) data.Add($"il{idxImpression}pi{idxProduct}pr", product.Price.Value.ToString(CultureInfo.InvariantCulture));
+            if (product.Position.HasValue) data.Add($"il{idxImpression}pi{idxProduct}ps", product.Position.Value.ToString(CultureInfo.InvariantCulture));
+            foreach (var item in product.CustomDimensions)
+            {
+                data.Add($"il{idxImpression}pi{idxProduct}cd{item.Key}", item.Value);
+            }
+            foreach (var item in product.CustomMetrics)
+            {
+                data.Add($"il{idxImpression}pi{idxProduct}cm{item.Key}", item.Value.ToString(CultureInfo.InvariantCulture));
+            }
+            return new HitBuilder(lineage, data, impressions);
         }
 
         /// <summary>
