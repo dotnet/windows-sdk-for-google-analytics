@@ -185,7 +185,7 @@ namespace GoogleAnalytics
         /// <param name="index">The index/slot in which the metric will be set.</param>
         /// <param name="metric">The value of the metric for the given index.</param>
         /// <returns>The builder object that you can use to chain calls.</returns>
-        public HitBuilder SetCustomMetric(int index, long metric)
+        public HitBuilder SetCustomMetric(int index, float metric)
         {
             return new HitBuilder(lineage, new Dictionary<string, string>() { { $"cm{index}", metric.ToString(CultureInfo.InvariantCulture) } });
         }

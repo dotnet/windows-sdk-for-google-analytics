@@ -13,7 +13,7 @@ namespace GoogleAnalytics.Ecommerce
         public Product()
         {
             CustomDimensions = new Dictionary<int, string>();
-            CustomMetrics = new Dictionary<int, int>();
+            CustomMetrics = new Dictionary<int, float>();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace GoogleAnalytics.Ecommerce
         /// <summary>
         /// Gets or sets the custom metrics associated with the product.
         /// </summary>
-        public IDictionary<int, int> CustomMetrics { get; private set; }
+        public IDictionary<int, float> CustomMetrics { get; private set; }
 
         /// <summary>
         /// Gets or sets the id that is used to identify a product in GA reports.
