@@ -224,7 +224,7 @@ namespace GoogleAnalytics
             if (product.Category != null) data.Add($"pr{index}ca", product.Category);
             if (product.Variant != null) data.Add($"pr{index}va", product.Variant);
             if (product.Price.HasValue) data.Add($"pr{index}pr", product.Price.Value.ToString(CultureInfo.InvariantCulture));
-            if (product.Quantity.HasValue) data.Add($"pr{index}at", product.Quantity.Value.ToString(CultureInfo.InvariantCulture));
+            if (product.Quantity.HasValue) data.Add($"pr{index}qt", product.Quantity.Value.ToString(CultureInfo.InvariantCulture));
             if (product.CouponCode != null) data.Add($"pr{index}cc", product.CouponCode);
             if (product.Position.HasValue) data.Add($"pr{index}ps", product.Position.Value.ToString(CultureInfo.InvariantCulture));
             foreach (var item in product.CustomDimensions)
